@@ -15,7 +15,7 @@ their own computers.
 
 2. Clone this repository using git:
 
-     git clone git@github.com:jhale/newfrac-fenicsx-training.git
+       git clone git@github.com:jhale/newfrac-fenicsx-training.git
 
 3. Run `./launch-notebook.sh`.
 
