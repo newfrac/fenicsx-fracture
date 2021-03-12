@@ -36,6 +36,8 @@ binder service to execute the notebooks:
 The course will assume basic knowledge of the theory of finite elasticity and
 finite element methods. We will also assume that the students have taken the
 NEWFRAC Core School 2021 *Basic computational methods for fracture mechanics*.
+Basic knowledge of Python will be assumed, see https://github.com/jakevdp/WhirlwindTourOfPython
+to brush up if you feel unsure.
 
 ### Course Schedule
 
