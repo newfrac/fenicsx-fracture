@@ -43,9 +43,9 @@ to brush up if you feel unsure.
 
 * 0900-1030 Session 1 (1hr30m). Introduction to DOLFINX with linear elasticity.
 * 1030-1045 Break (15m).
-* 1045-1215 Session 2 (1hr30m). Finite elasticity I.
+* 1045-1215 Session 2 (1hr30m). Finite elasticity 
 * 1215-1315 Lunch (1hr).
-* 1315-1445 Session 3 (1hr30m). Finite elasticity II.
+* 1315-1445 Session 3 (1hr30m). Variational theory of fracture.
 * 1445-1500 Break. (15m).
 * 1500-1630 Session 4 (1hr30m). Variational theory of fracture.
 
