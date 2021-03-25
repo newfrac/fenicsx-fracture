@@ -1,0 +1,19 @@
+# Table of content
+# Learn more at https://jupyterbook.org/customize/toc.html
+#
+- file: index.md
+
+- part: Linear Elasticity
+  chapters:
+    - file: 01-linear-elasticity/01-LinearElasticity.ipynb
+ #   - file: 01-linear-elasticity/01-linear-elasticity.ipynb
+
+- part: Nonlinear Elasticity
+  chapters:
+    - file: 02-finite-elasticity/02-finite-elasticity-I.ipynb
+    
+- part: Phase-field fracture model
+  chapters:
+    - file: 03-phase-field/03-phase-field.ipynb
+
+
