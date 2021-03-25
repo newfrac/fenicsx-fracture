@@ -133,3 +133,11 @@ book/_build
 
 # mac
 .DS_Store
+book/01-linear-elasticity/mesh.msh
+
+# outputs
+book/*/output/*
+
+# vscode
+.vscode
+.devcontainer

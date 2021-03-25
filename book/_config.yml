@@ -3,7 +3,7 @@
 
 title: NewFrac FEniCSx Training
 author: Jack Hale, Corrado Maurini
-logo: logo.jpeg
+logo: images/logo.jpeg
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
@@ -19,9 +19,9 @@ latex:
 
 # Information about where the book exists on the web
 repository:
-  url: https://gitlab.com/newfrac/newfrac.gitlab.io # Online location of your book
+  url: https://gitlab.com/newfrac//newfrac-fenicsx-training # Online location of your book
   path_to_book: . # Optional path to your book, relative to the repository root
-  branch: master # Which branch of the repository should be used when creating links (optional)
+  branch: main # Which branch of the repository should be used when creating links (optional)
 
   # Add a bibtex file so that we can create citations
 bibtex_bibfiles:
