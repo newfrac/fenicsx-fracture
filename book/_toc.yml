@@ -18,4 +18,4 @@
 
 - part: DOLFINX in parallel
   chapters:
-    - file: 04-phase-field/04-dolfinx-parallel.ipynb
+    - file: 04-dolfinx-parallel/04-dolfinx-parallel.ipynb
