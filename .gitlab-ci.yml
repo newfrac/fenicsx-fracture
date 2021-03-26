@@ -17,13 +17,10 @@ cache:
 
 before_script:
   - python -V  # Print out python version for debugging
-  - pip install virtualenv
-  - virtualenv venv
-  - source venv/bin/activate
 
 pages:
   script:
-    - pip install -r requirements.txt
+    - pip3 install -r requirements.txt
     - jupyter-book build book
     - mv book/_build/html/ public/
   artifacts:
