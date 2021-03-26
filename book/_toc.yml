@@ -16,4 +16,6 @@
   chapters:
     - file: 03-phase-field/03-phase-field.ipynb
 
-
+- part: DOLFINX in parallel
+  chapters:
+    - file: 04-phase-field/04-dolfinx-parallel.ipynb
