@@ -3,8 +3,13 @@ image: dokken92/dolfinx_custom:19032021
 # Change pip's cache directory to be inside the project directory since we can
 # only cache local items.
 variables:
-  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
-
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip" 
+  HDF5_MPI: "ON"
+  CC: mpicc
+  HDF5_DIR: "/usr/lib/x86_64-linux-gnu/hdf5/mpich/"
+  DISPLAY: ":99.0" 
+  PYVISTA_OFF_SCREEN: true
+  
 # Pip's cache doesn't store the python packages
 # https://pip.pypa.io/en/stable/reference/pip_install/#caching
 #
