@@ -21,7 +21,7 @@
 
 - part: DOLFINX in parallel
   chapters:
-    - file: 04-dolfinx-parallel/dolfinx-parallel.ipynb
+    - file: 05-dolfinx-parallel/dolfinx-parallel.ipynb
 
 - part: Utility functions
   chapters:
