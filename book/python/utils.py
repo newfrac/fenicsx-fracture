@@ -62,7 +62,7 @@ def evaluate_on_points(field, points):
     values_on_proc = field.eval(points_on_proc, cells)
     return points_on_proc, values_on_proc
 
-
+    
 if __name__ == "__main__":
     
     import dolfinx

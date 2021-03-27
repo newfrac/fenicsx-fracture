@@ -13,7 +13,7 @@ RUN adduser --disabled-password \
     --uid ${NB_UID} \
     ${NB_USER}
 
-RUN pip3 install jupyterhub nbconvert itkwidgets
+RUN pip3 install jupyterhub nbconvert itkwidgets jupyter-book sympy
 
 WORKDIR ${HOME}
 COPY . ${HOME}
