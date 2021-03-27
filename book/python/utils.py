@@ -27,6 +27,42 @@ def project(v, target_func, bcs=[]):
     solver.setOperators(A)
     solver.solve(b, target_func.vector)
     
+    
+def evaluate_on_points(field, points):
+    
+    """This function returns the values of a field on a set of points
+
+    Parameters
+    ==========
+    field: The FEniCS function from which we wan
+    points: a n x 3 np.array with the coordinates of the points where to evaluate the function
+    
+    It returns:
+    - points_on_proc: the local slice of the point array
+    - values_on_proc: the local slice of the values
+    """
+    
+    import dolfinx.geometry
+    import numpy as np
+    
+    mesh = field.function_space.mesh
+    bb_tree = dolfinx.geometry.BoundingBoxTree(mesh, mesh.topology.dim)
+    cells = []
+    points_on_proc = []
+    for point in points.T:
+        # Find cells that are close to the point
+        cell_candidates = dolfinx.geometry.compute_collisions_point(bb_tree, point)
+        # Choose one of the cells that contains the point
+        cell = dolfinx.geometry.select_colliding_cells(mesh, cell_candidates, point, 1)
+        # Only use evaluate for points on current processor
+        if len(cell) == 1:
+            points_on_proc.append(point)
+            cells.append(cell[0])
+    points_on_proc = np.array(points_on_proc, dtype=np.float64)
+    values_on_proc = field.eval(points_on_proc, cells)
+    return points_on_proc, values_on_proc
+
+
 if __name__ == "__main__":
     
     import dolfinx
@@ -44,3 +80,5 @@ if __name__ == "__main__":
     V2 = dolfinx.FunctionSpace(mesh, ("DG", 0))
     u2 = dolfinx.Function(V2)
     project(u1.dx(0), u2)
+    
+    # TODO: add a test for 'evaluate_on_points' 
