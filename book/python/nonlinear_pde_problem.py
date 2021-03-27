@@ -1,9 +1,9 @@
+from typing import List
+
 from petsc4py import PETSc
 
 import dolfinx
 import ufl
-
-from typing import List
 
 class NonlinearPDEProblem:
     """Nonlinear problem class compatible with dolfinx.NewtonSolver.
@@ -68,3 +68,6 @@ class NonlinearPDEProblem:
         A.zeroEntries()
         dolfinx.fem.assemble_matrix(A, self.a, self.bcs)
         A.assemble()
+
+
+

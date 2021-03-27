@@ -137,6 +137,8 @@ book/01-linear-elasticity/mesh.msh
 
 # outputs
 book/*/output/*
+book/*/*.h5
+book/*/*.xmdf
 
 # vscode
 .vscode
