@@ -13,9 +13,9 @@ execute:
   # Set timeout for any example to 20 minutes
   timeout: 1800
 # Define the name of the latex output file for PDF builds
-latex:
-  latex_documents:
-    targetname: book.tex
+#latex:
+#  latex_documents:
+#    targetname: book.tex
 
 # Information about where the book exists on the web
 repository:
@@ -42,13 +42,13 @@ parse:
 # Add GitHub buttons to your book
 # See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
 html:
-  use_issues_button: false
+  use_issues_button: true
   use_repository_button: true
-  use_edit_page_button: false
+  use_edit_page_button: true
 
   extra_footer: |
     <div>
-        This webpage is internal to the Newfrac network.
+      Jack Hale, Corrado Maurini. The configuration of this repository is adapted from the excellent dolfinx-tutorial by Jørgen Schartum Dokken: https://github.com/jorgensd/dolfinx-tutorial
     </div>
 
 exclude_patterns: [README.md]
