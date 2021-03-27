@@ -1,4 +1,4 @@
-image: dolfinx/lab
+image: dokken92/dolfinx_custom:19032021
 
 # Change pip's cache directory to be inside the project directory since we can
 # only cache local items.
