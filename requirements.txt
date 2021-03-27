@@ -3,3 +3,6 @@ matplotlib
 numpy
 itkwidgets
 sympy
+notebook 
+nbconvert 
+myst_parser==0.13.3
