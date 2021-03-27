@@ -17,8 +17,16 @@
 
 - part: Phase-field fracture model
   chapters:
-    - file: 03-phase-field/phase-field.ipynb
+    - file: 04-phase-field/phase-field.ipynb
 
 - part: DOLFINX in parallel
   chapters:
     - file: 04-dolfinx-parallel/dolfinx-parallel.ipynb
+
+- part: Utility functions
+  chapters:
+    - file: python/nonlinear_pde_problem.py
+    - file: python/snes_problem.py
+    - file: python/meshes.py
+    - file: python/plots.py
+    - file: python/utils.py

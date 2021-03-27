@@ -129,16 +129,16 @@ dmypy.json
 .pyre/
 
 # jupyter book
-book/_build
+notebooks/_build
 
 # mac
 .DS_Store
-book/01-linear-elasticity/mesh.msh
+notebooks/01-linear-elasticity/mesh.msh
 
 # outputs
-book/*/output/*
-book/*/*.h5
-book/*/*.xmdf
+notebooks/*/output/*
+notebooks/*/*.h5
+notebooks/*/*.xmdf
 
 # vscode
 .vscode
