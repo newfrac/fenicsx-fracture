@@ -15,7 +15,7 @@ their own computers.
 
 2. Clone this repository using git:
 
-       git clone git@github.com:jhale/newfrac-fenicsx-training.git
+       git clone git@gitlab.com:newfrac/newfrac-fenicsx-training.git
 
 3. Run `./launch-notebook.sh`.
 
@@ -26,10 +26,7 @@ their own computers.
    found in the output from the terminal and will look like e.g.
    `b64972b8b7df3717089c4899bd028f5e2df6a73a845cb250`.
 
-Although we recommend using Docker locally, you can also use the cloud-based
-binder service to execute the notebooks:
-
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jhale/newfrac-fenicsx-training/HEAD)
+Although we recommend using Docker locally, you can also use the cloud-based binder service to execute the notebooks:
 
 ### Prerequisite knowledge
 
