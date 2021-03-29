@@ -1,4 +1,5 @@
 FROM dolfinx/lab
+LABEL description="JupyterLab image for local use"
 
 # Dependencies for pyvista and related packages
 RUN wget -qO - https://deb.nodesource.com/setup_15.x | bash && \
