@@ -15,8 +15,8 @@ their own computers.
 
 2. Clone this repository using git:
 
-       git clone git@gitlab.com:newfrac/newfrac-fenicsx-training.git
-
+       git clone https://gitlab.com/newfrac/newfrac-fenicsx-training.git
+       
 3. Run `./launch-notebook.sh`.
 
 4. You should be able to see the JupyterLab instance by navigating to
