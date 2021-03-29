@@ -17,7 +17,7 @@ their own computers.
 
        git clone https://gitlab.com/newfrac/newfrac-fenicsx-training.git
        
-3. Run `./launch-notebook.sh`.
+3. Run `launch_container.sh`.
 
 4. You should be able to see the JupyterLab instance by navigating to
    https://localhost:8888 in your web browser.
