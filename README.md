@@ -5,6 +5,7 @@ This repository contains material for a day-long course on using DOLFINx,
 the computational problem solving environment of the FEniCS Project. The
 focus will be on solving problems arising in solid mechanics.
 
+This repository automatically generates a jupyter-book here: https://newfrac.gitlab.io/newfrac-fenicsx-training/
 ### Running the notebooks (to be tested *prior* to course start)
 
 Students should execute the notebooks using a Docker container running on
