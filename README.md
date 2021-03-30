@@ -17,8 +17,8 @@ their own computers.
 2. Clone this repository using git:
 
        git clone https://gitlab.com/newfrac/newfrac-fenicsx-training.git
-       
-3. Run `launch_container.sh`.
+
+3. Run `./launch_container.sh`.
 
 4. You should be able to see the JupyterLab instance by navigating to
    https://localhost:8888 in your web browser.
@@ -28,6 +28,8 @@ their own computers.
    `b64972b8b7df3717089c4899bd028f5e2df6a73a845cb250`.
 
 Although we recommend using Docker locally, you can also use the cloud-based binder service to execute the notebooks:
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gl/newfrac%2Fnewfrac-fenicsx-training/HEAD)
 
 ### Prerequisite knowledge
 
@@ -45,9 +47,7 @@ to brush up if you feel unsure.
 * 1215-1315 Lunch (1hr).
 * 1315-1445 Session 3 (1hr30m). Solver for Variational Inequalities. Variational theory of fracture.
 * 1445-1500 Break. (15m).
-* 1500-1630 Session 4 (1hr30m). Variational theory of fracture.
-
-### Capstone Project
+* 1500-1630 Session 4 (1hr30m). Variational theory of fracture or DOLFINX in parallel.
 
 ### Instructors/Authors
 
