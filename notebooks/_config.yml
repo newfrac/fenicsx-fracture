@@ -39,6 +39,14 @@ parse:
     - "replacements"
     - "smartquotes"
     - "substitution"
+
+sphinx:
+  config:
+    nb_custom_formats:
+        .Rmd:
+            - jupytext.reads
+            - fmt: Rmd
+            
 # Add GitHub buttons to your book
 # See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
 html:

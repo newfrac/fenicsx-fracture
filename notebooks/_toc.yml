@@ -25,8 +25,4 @@
 
 - part: Utility functions
   chapters:
-    - file: python/nonlinear_pde_problem.py
-    - file: python/snes_problem.py
-    - file: python/meshes.py
-    - file: python/plots.py
-    - file: python/utils.py
+    - file: python/README.md
