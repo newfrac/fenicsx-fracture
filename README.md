@@ -1,5 +1,5 @@
 # NewFrac FEniCSx Training
-## 30th March 2020 at Sorbonnes Université
+## 30th March 2021 at Sorbonnes Université
 
 This repository contains material for a day-long course on using DOLFINx,
 the computational problem solving environment of the FEniCS Project. The
