@@ -1,22 +1,16 @@
-# Table of content
-# Learn more at https://jupyterbook.org/customize/toc.html
-#
-- file: index.md
-
-- part: Elasticity 
+format: jb-book
+root: index.md
+parts:
+- caption: Elasticity
   chapters:
-    - file: 01-linear-elasticity/LinearElasticity.ipynb
-    - file: 02-finite-elasticity/finite-elasticity-I.ipynb
-
-- part: Phase-field fracture models
+  - file: Linear-elasticity/00-Mesh.ipynb
+  - file: Linear-elasticity/01-LinearElasticity.ipynb
+- caption: Linear elastic fracture mechanics
   chapters:
-    - file: 03-variational-inequalities/VI.ipynb
-    - file: 04-phase-field/phase-field.ipynb
-
-- part: DOLFINX in parallel
+  - file: Linear-elasticity/02-LEFM.ipynb
+- caption: Phase-field fracture models
   chapters:
-    - file: 05-dolfinx-parallel/dolfinx-parallel.ipynb
-
-- part: Utility functions
+  - file: Phase-field/phase-field.ipynb
+- caption: Utility functions
   chapters:
-    - file: python/README.md
+  - file: utils/README.md
