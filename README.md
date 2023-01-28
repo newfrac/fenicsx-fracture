@@ -1,9 +1,21 @@
 # FEniCSx Fracture mechanics examples
 
 This repository automatically generates a jupyter-book here: PUT THE LINK HERE
-## Running the notebooks (to be tested *prior* to course start)
 
-*TODO: Put conda commands to install and links to fenics install page*
+## Installation
+
+To create the conda environement and activate it
+
+```bash
+conda env create -f fenicsx-fracture.yml
+conda activate fenicsx-fracture
+```
+To generate the book the book locally:
+```bash
+jupyter-book build notebooks
+```
+To visualize the results, open in your browser the generated file `_build/html/index.html`.
+
 
 Although we recommend to execute the notebook locally, you can also use the cloud-based binder service to execute the notebooks:
 

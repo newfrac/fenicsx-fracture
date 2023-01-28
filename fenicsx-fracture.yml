@@ -1,0 +1,33 @@
+name : fenicsx-fracture
+channels :
+  - conda-forge
+  - defaults
+dependencies :
+  - fenics-dolfinx==0.5.1
+  - matplotlib
+  - numba
+  - numpy
+  - sympy
+  - scipy
+  - pip
+  - gmsh
+  - python-gmsh
+  - pythreejs
+  - jupyter-book
+  - autopep8
+  - black
+  - flake8
+  - autoflake
+  - pyaml
+  - pandas 
+  - jupyterlab
+  - pip 
+pip:
+  - pyvista
+  - pythreejs
+  - ipygany
+
+
+
+    
+
