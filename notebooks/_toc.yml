@@ -3,20 +3,14 @@
 #
 - file: index.md
 
-- part: Linear Elasticity
+- part: Elasticity 
   chapters:
     - file: 01-linear-elasticity/LinearElasticity.ipynb
-
-- part: Nonlinear Elasticity
-  chapters:
     - file: 02-finite-elasticity/finite-elasticity-I.ipynb
 
-- part: Variational Inequalities
+- part: Phase-field fracture models
   chapters:
     - file: 03-variational-inequalities/VI.ipynb
-
-- part: Phase-field fracture model
-  chapters:
     - file: 04-phase-field/phase-field.ipynb
 
 - part: DOLFINX in parallel
