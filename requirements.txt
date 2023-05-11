@@ -1,8 +1,6 @@
 jupyter-book
-matplotlib
-numpy
-itkwidgets
+nbconvert
 sympy
-notebook 
-nbconvert 
-myst_parser==0.13.3
+pyaml
+scipy 
+json5

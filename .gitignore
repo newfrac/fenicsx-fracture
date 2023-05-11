@@ -127,9 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-# jupyter book
-notebooks/_build
+_build
 
 # mac
 .DS_Store

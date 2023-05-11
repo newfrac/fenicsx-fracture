@@ -1,38 +1,27 @@
-FROM dolfinx/dolfinx as lab
-LABEL description="DOLFIN-X Jupyter Lab for Binder"
+FROM ghcr.io/fenics/dolfinx/lab:nightly
 
-USER root
-WORKDIR /tmp/
+RUN apt-get update && apt-get install -y libgl1-mesa-glx libxrender1 xvfb nodejs
+ENV PYVISTA_JUPYTER_BACKEND="panel"
 
-# Dependencies for pyvista and related packages
-RUN wget -qO - https://deb.nodesource.com/setup_15.x | bash && \
-    apt-get -qq update && \
-    apt-get install -y libgl1-mesa-dev xvfb nodejs && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+ADD docker/requirements.txt requirements.txt
+RUN python3 -m pip install -r requirements.txt
 
-# Pyvista ITKWidgets dependencies
-RUN pip3 install --no-cache-dir itkwidgets ipywidgets matplotlib jupyterlab
-RUN jupyter labextension install jupyter-matplotlib jupyterlab-datawidgets itkwidgets 
-
-# Install meshio
-RUN pip3 install --no-cache-dir --no-binary=h5py h5py meshio 
-
-# Install progress-bar
-RUN pip3 install tqdm
-
-# Additional python modules
-RUN pip3 install --no-cache-dir sympy
-
-ARG NB_USER
-ARG NB_UID
-ENV USER ${NB_USER}
+# create user with a home directory
+ARG NB_USER=jovyan
+ARG NB_UID=1000
+RUN useradd -m ${NB_USER} -u ${NB_UID}
 ENV HOME /home/${NB_USER}
-ENV PETSC_ARCH "linux-gnu-real-32"
-RUN adduser --disabled-password \
-    --gecos "Default user" \
-    --uid ${NB_UID} \
-    ${NB_USER}
+
+# for binder: base image upgrades lab to require jupyter-server 2,
+# but binder explicitly launches jupyter-notebook
+# force binder to launch jupyter-server instead
+RUN nb=$(which jupyter-notebook) \
+    && rm $nb \
+    && ln -s $(which jupyter-lab) $nb
+
+# Copy home directory for usage in binder
 WORKDIR ${HOME}
-COPY . ${HOME}
-USER ${USER}
+COPY --chown=${NB_UID} . ${HOME}
+
+USER ${NB_USER}
+ENTRYPOINT []
