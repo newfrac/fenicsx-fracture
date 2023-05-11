@@ -1,5 +1,6 @@
 # The Docker image that will be used to build your app
-image: ghcr.io/fenics/dolfinx/lab:v0.6.0-r1
+image: dokken92/dolfinx_custom:19032021
+#ghcr.io/fenics/dolfinx/lab:v0.6.0-r1
 # Functions that should be executed before the build script is run
 
 variables: 
