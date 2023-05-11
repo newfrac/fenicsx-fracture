@@ -11,7 +11,7 @@ variables:
     PYVISTA_OFF_SCREEN: "false"
     PYVISTA_TRAME_SERVER_PROXY_PREFIX: '/proxy/'
     PYVISTA_TRAME_SERVER_PROXY_ENABLED: "True"
-    PYVISTA_OFF_SCREEN: false
+    PYVISTA_OFF_SCREEN: "False"
     PYVISTA_JUPYTER_BACKEND: "panel"
 
 before_script:
