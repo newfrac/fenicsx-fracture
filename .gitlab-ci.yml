@@ -1,5 +1,7 @@
 # The Docker image that will be used to build your app
-image: dolfinx/lab:v0.6.0-r1
+image:
+   name: ghcr.io/fenics/dolfinx/lab:nightly
+   entrypoint: [""]
 # Functions that should be executed before the build script is run
 
 variables: 
@@ -13,6 +15,8 @@ variables:
     PYVISTA_TRAME_SERVER_PROXY_ENABLED: "True"
     PYVISTA_OFF_SCREEN: "False"
     PYVISTA_JUPYTER_BACKEND: "panel"
+    PUBLISH_DIR: "./_build/html"
+    DEB_PYTHON_INSTALL_LAYOUT: "deb_system"
 
 before_script:
   - apt-get update && apt-get install -y libgl1-mesa-glx libxrender1 xvfb
