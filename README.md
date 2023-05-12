@@ -1,6 +1,6 @@
 # FEniCSx Fracture mechanics examples
 
-This repository automatically generates a jupyter-book here: PUT THE LINK HERE
+This repository automatically generates a jupyter-book here: `https://newfrac.gitlab.io/fenicsx-fracture/`
 
 ## Installation
 
@@ -27,12 +27,17 @@ from the root of this repository. To create a one-time usage container you can c
 
 ```
 docker run -ti -v $(pwd):/root/shared -w /root/shared --rm fenicsx-fracture
-````
+```
+```
+docker run --rm -ti -v $(pwd):/root/shared -w /root/shared  --init -p 8888:8888 fenicsx-fracture
+```
+
 
 ## Binder
 Although we recommend to execute the notebook locally, you can also use the cloud-based binder service to execute the notebooks:
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gl/newfrac%2Fnewfrac-fenicsx-training/HEAD)
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/newfrac/fenicsx-fracture/HEAD)
 
 ## Acknowledgements
 
