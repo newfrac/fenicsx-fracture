@@ -4,6 +4,7 @@ This repository automatically generates a jupyter-book here: PUT THE LINK HERE
 
 ## Installation
 
+### Conda
 To create the conda environement and activate it
 
 ```bash
@@ -16,7 +17,19 @@ jupyter-book build notebooks
 ```
 To visualize the results, open in your browser the generated file `_build/html/index.html`.
 
+### Docker
+To build a docker image for this documentation, you can run
 
+```
+docker build -t fenicsx-fracture -f docker/Dockerfile docker/
+```
+from the root of this repository. To create a one-time usage container you can call:
+
+```
+docker run -ti -v $(pwd):/root/shared -w /root/shared --rm fenicsx-fracture
+````
+
+## Binder
 Although we recommend to execute the notebook locally, you can also use the cloud-based binder service to execute the notebooks:
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gl/newfrac%2Fnewfrac-fenicsx-training/HEAD)

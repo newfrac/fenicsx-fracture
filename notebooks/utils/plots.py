@@ -1,5 +1,5 @@
 import numpy as np
-import dolfinx.plot
+import dolfinx.plot as plot
 import pyvista
 
 

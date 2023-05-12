@@ -1,6 +1,0 @@
-jupyter-book
-nbconvert
-sympy
-pyaml
-scipy 
-json5

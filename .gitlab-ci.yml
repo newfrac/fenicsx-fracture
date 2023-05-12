@@ -1,6 +1,6 @@
 # The Docker image that will be used to build your app
 image:
-   name: ghcr.io/fenics/dolfinx/lab:nightly
+   name: ghcr.io/fenics/dolfinx/lab:v0.6.0-r1
    entrypoint: [""]
 # Functions that should be executed before the build script is run
 
@@ -13,7 +13,6 @@ variables:
     PYVISTA_OFF_SCREEN: "false"
     PYVISTA_TRAME_SERVER_PROXY_PREFIX: '/proxy/'
     PYVISTA_TRAME_SERVER_PROXY_ENABLED: "True"
-    PYVISTA_OFF_SCREEN: "False"
     PYVISTA_JUPYTER_BACKEND: "panel"
     PUBLISH_DIR: "./_build/html"
     DEB_PYTHON_INSTALL_LAYOUT: "deb_system"
@@ -36,3 +35,17 @@ pages:
     # This ensures that only pushes to the default branch will trigger
     # a pages deploy
     - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+
+test:
+  stage: test
+  variables: 
+    PYVISTA_OFF_SCREEN: "True"
+  script:
+    - cd notebooks/Linear-Elasticity
+    - jupyter-nbconvert *.pynb --to python
+    - python3 00-Mesh.py
+    - python3 01-LinearElasticity.py
+    - python3 02-LEFM.py
+    - cd ../Phase-field
+    - jupyter-nbconvert *.pynb --to python
+    - python3 02-LEFM.py

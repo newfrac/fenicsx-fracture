@@ -142,3 +142,10 @@ notebooks/*/*.xmdf
 .vscode
 .devcontainer
 notebooks/03-variational-inequalities/mesh.xdmf
+
+# py versions of notebooks
+notebooks/Linear-elasticity/00-Mesh.py
+notebooks/Linear-elasticity/01-LinearElasticity.py
+notebooks/Linear-elasticity/02-LEFM.py
+notebooks/Linear-elasticity/02-LEFM.py
+notebooks/Phase-field/phase-field.py

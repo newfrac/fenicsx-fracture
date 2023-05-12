@@ -1,10 +1,11 @@
-FROM ghcr.io/fenics/dolfinx/lab:v0.6.0-r1
+FROM continuumio/miniconda3
 
 RUN apt-get update && apt-get install -y libgl1-mesa-glx libxrender1 xvfb nodejs
 ENV PYVISTA_JUPYTER_BACKEND="panel"
 
-ADD docker/requirements.txt requirements.txt
-RUN python3 -m pip install -r requirements.txt
+ADD fenicsx-fracture.yml fenicsx-fracture.yml
+RUN conda env create -f fenicsx-fracture.yml
+RUN conda activate fenicsx-fracture
 
 # create user with a home directory
 ARG NB_USER=jovyan
