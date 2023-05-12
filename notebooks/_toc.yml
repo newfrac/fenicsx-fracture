@@ -11,6 +11,9 @@ parts:
 - caption: Phase-field fracture models
   chapters:
   - file: Phase-field/phase-field.ipynb
+- caption: Coupled Criterion fracture mechanics
+  chapters:
+  - file: Coupled Criterion/Coupled_Criterion.ipynb
 - caption: Utility functions
   chapters:
   - file: utils/README.md
