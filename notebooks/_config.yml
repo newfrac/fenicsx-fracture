@@ -19,7 +19,7 @@ execute:
 
 # Information about where the book exists on the web
 repository:
-  url: https://gitlab.com/newfrac/newfrac-fenicsx-training # Online location of your book
+  url: hhttps://gitlab.com/newfrac/fenicsx-fracture # Online location of your book
   path_to_book: . # Optional path to your book, relative to the repository root
   branch: main # Which branch of the repository should be used when creating links (optional)
 
@@ -56,7 +56,7 @@ html:
 
   extra_footer: |
     <div>
-      Jack Hale, Corrado Maurini. The configuration of this repository is adapted from the excellent dolfinx-tutorial by Jørgen Schartum Dokken: https://github.com/jorgensd/dolfinx-tutorial
+      Funded by the European Commission under a Marie Skłodowska-Curie Actions Grant Agreement n. 861061. 
     </div>
 
 exclude_patterns: [README.md]
