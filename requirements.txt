@@ -5,7 +5,6 @@ nbconvert
 # General tools
 sympy
 scipy 
-lsjson5
 pyaml
 
 # Pyvista
