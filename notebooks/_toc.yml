@@ -11,7 +11,7 @@ parts:
 - caption: Elastodynamics
   chapters:
   - file: Elastodynamics/06A-Elastodynamics.ipynb
-  - file: Elastodynamics/06A-Elastodynamics-explicit.ipynb
+  - file: Elastodynamics/06B-Elastodynamics_explicit.ipynb
 - caption: Phase-field fracture models
   chapters:
   - file: Phase-field/phase-field.ipynb
