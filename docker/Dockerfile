@@ -14,7 +14,7 @@ RUN python3 -m pip install -U "setuptools" pip pkgconfig
 RUN python3 -m pip install cython
 
 ADD requirements.txt /tmp/requirements.txt
-RUN python3 -m pip install --no-cache-dir -r requirements.txt
+RUN python3 -m pip install --no-cache-dir -r /tmp/requirements.txt
 RUN python3 -m pip cache purge
 # RUN jupyter lab build
 # ENTRYPOINT ["jupyter", "lab", "--ip", "0.0.0.0", "--no-browser", "--allow-root"]

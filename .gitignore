@@ -149,3 +149,6 @@ notebooks/Linear-elasticity/01-LinearElasticity.py
 notebooks/Linear-elasticity/02-LEFM.py
 notebooks/Linear-elasticity/02-LEFM.py
 notebooks/Phase-field/phase-field.py
+
+#gitlab CI
+builds
