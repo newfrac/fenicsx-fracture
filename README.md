@@ -21,7 +21,7 @@ To visualize the results, open in your browser the generated file `_build/html/i
 To build a docker image for this documentation, you can run
 
 ```
-docker build -t fenicsx-fracture -f docker/Dockerfile docker/
+docker build -t fenicsx-fracture -f docker/Dockerfile .
 ```
 from the root of this repository. To create a one-time usage container you can call:
 
