@@ -9,16 +9,16 @@ pyaml
 
 # Pyvista
 panel
+trame 
 
 # Jupyter-book
 jupyter-book
 
 # Meshio
 meshio
---no-binary=h5py 
-git+https://github.com/h5py/h5py@master
-#--no-cache-dir
-#h5py
+#--no-binary=h5py 
+#git+https://github.com/h5py/h5py@master
+
 
 # Visualization with pandas
 seaborn
