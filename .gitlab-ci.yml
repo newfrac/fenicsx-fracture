@@ -7,13 +7,10 @@ image:
 variables: 
     HDF5_MPI: "ON"
     HDF5_DIR: "/usr/local/"
-    DISPLAY: ":99.0"
     DEB_PYTHON_INSTALL_LAYOUT: deb_system
     PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip" 
     PYVISTA_OFF_SCREEN: "false"
-    PYVISTA_TRAME_SERVER_PROXY_PREFIX: '/proxy/'
-    PYVISTA_TRAME_SERVER_PROXY_ENABLED: "True"
-    PYVISTA_JUPYTER_BACKEND: "panel"
+    PYVISTA_JUPYTER_BACKEND: "static"
     PUBLISH_DIR: "./_build/html"
     DEB_PYTHON_INSTALL_LAYOUT: "deb_system"
 
