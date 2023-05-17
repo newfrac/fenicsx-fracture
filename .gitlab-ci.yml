@@ -54,7 +54,7 @@ test/linear-elasticity:
   stage: test
   script:
     - cd notebooks/linear-elasticity
-    - jupyter-nbconvert *.pynb --to python
+    - jupyter-nbconvert *.ipynb --to python
     - python3 00-Mesh.py
     - python3 01-LinearElasticity.py
     - python3 02-LEFM.py
@@ -63,13 +63,13 @@ test/phase-field:
   stage: test
   script:
     - cd notebooks/phase-field
-    - jupyter-nbconvert *.pynb --to python
+    - jupyter-nbconvert *.ipynb --to python
     - python3 phase-field.py
 
 test/elastodynamics:
   stage: test
   script:
     - cd notebooks/elastodynamics
-    - jupyter-nbconvert *.pynb --to python
+    - jupyter-nbconvert *.ipynb --to python
     - python3 01-Elastodynamics.py    
     - python3 01-Elastodynamics_explicit.py
