@@ -17,11 +17,18 @@ variables:
     PUBLISH_DIR: "./_build/html"
     DEB_PYTHON_INSTALL_LAYOUT: "deb_system"
 
+stages:
+#    - lint
+    - pages
+    - demo
+    - release
+
 before_script:
   - apt-get update && apt-get install -y libgl1-mesa-glx libxrender1 xvfb
   - python3 -m pip install -U pip
   #- python3 -m pip install --no-binary=h5py git+https://github.com/h5py/h5py@master
   - python3 -m pip install -r requirements.txt
+
 
 pages:
   script:
@@ -36,16 +43,34 @@ pages:
     # a pages deploy
     - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
 
-test:
+.test_template:
+    stage: test
+    variables: 
+      PYVISTA_OFF_SCREEN: "True"
+    rules:
+        - if: ($CI_PIPELINE_SOURCE == "merge_request_event")
+        - if: ($CI_PIPELINE_SOURCE == "schedule")
+
+test/linear-elasticity:
   stage: test
-  variables: 
-    PYVISTA_OFF_SCREEN: "True"
   script:
-    - cd notebooks/Linear-Elasticity
+    - cd notebooks/linear-elasticity
     - jupyter-nbconvert *.pynb --to python
     - python3 00-Mesh.py
     - python3 01-LinearElasticity.py
     - python3 02-LEFM.py
-    - cd ../Phase-field
+
+test/phase-field:
+  stage: test
+  script:
+    - cd notebooks/phase-field
     - jupyter-nbconvert *.pynb --to python
-    - python3 02-LEFM.py
+    - python3 phase-field.py
+
+test/elastodynamics:
+  stage: test
+  script:
+    - cd notebooks/elastodynamics
+    - jupyter-nbconvert *.pynb --to python
+    - python3 01-Elastodynamics.py    
+    - python3 01-Elastodynamics_explicit.py
