@@ -14,8 +14,9 @@ trame
 # Jupyter-book
 jupyter-book
 
-# Meshio
+# Meshio and gmsh
 meshio
+gmsh
 #--no-binary=h5py 
 #git+https://github.com/h5py/h5py@master
 
@@ -26,3 +27,4 @@ pandas
 
 # Progress bar
 tqdm
+
