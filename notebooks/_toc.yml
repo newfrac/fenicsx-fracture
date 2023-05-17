@@ -8,6 +8,10 @@ parts:
 - caption: Linear elastic fracture mechanics
   chapters:
   - file: Linear-elasticity/02-LEFM.ipynb
+- caption: Elastodynamics
+  chapters:
+  - file: Elastodynamics/06A-Elastodynamics.ipynb
+  - file: Elastodynamics/06A-Elastodynamics-explicit.ipynb
 - caption: Phase-field fracture models
   chapters:
   - file: Phase-field/phase-field.ipynb
