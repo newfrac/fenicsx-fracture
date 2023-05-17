@@ -20,9 +20,8 @@ variables:
 stages:
 #    - lint
     - pages
-    - demo
-    - release
-
+    - test
+    
 before_script:
   - apt-get update && apt-get install -y libgl1-mesa-glx libxrender1 xvfb
   - python3 -m pip install -U pip
