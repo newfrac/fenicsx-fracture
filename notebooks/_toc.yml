@@ -3,21 +3,21 @@ root: index.md
 parts:
 - caption: Elasticity
   chapters:
-  - file: Linear-elasticity/00-Mesh.ipynb
-  - file: Linear-elasticity/01-LinearElasticity.ipynb
+  - file: linear-elasticity/00-Mesh.ipynb
+  - file: linear-elasticity/01-LinearElasticity.ipynb
 - caption: Linear elastic fracture mechanics
   chapters:
-  - file: Linear-elasticity/02-LEFM.ipynb
+  - file: linear-elasticity/02-LEFM.ipynb
 - caption: Elastodynamics
   chapters:
-  - file: Elastodynamics/06A-Elastodynamics.ipynb
-  - file: Elastodynamics/06B-Elastodynamics_explicit.ipynb
+  - file: elastodynamics/01-Elastodynamics.ipynb
+  - file: elastodynamics/02-Elastodynamics_explicit.ipynb
 - caption: Phase-field fracture models
   chapters:
-  - file: Phase-field/phase-field.ipynb
-- caption: Coupled Criterion fracture mechanics
+  - file: phase-field/phase-field.ipynb
+- caption: Coupled Criterion
   chapters:
-  - file: Coupled Criterion/Coupled_Criterion.ipynb
+  - file: coupled-criterion/Coupled_Criterion.ipynb
 - caption: Utility functions
   chapters:
   - file: utils/README.md
