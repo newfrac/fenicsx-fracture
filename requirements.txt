@@ -5,7 +5,7 @@ nbconvert
 # General tools
 sympy
 scipy 
-json5
+lsjson5
 pyaml
 
 # Pyvista
@@ -15,9 +15,10 @@ panel
 jupyter-book
 
 # Meshio
-meshio
---no-binary=h5py
-h5py
+#meshio
+#--no-binary=h5py
+#--no-cache-dir
+#h5py
 
 # Visualization with pandas
 seaborn
