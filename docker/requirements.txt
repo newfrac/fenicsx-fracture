@@ -15,12 +15,8 @@ trame
 jupyter-book
 
 # Meshio and gmsh
-pybind11==2.10.3
 meshio
 gmsh
-mpi4py
---no-binary=h5py 
-git+https://github.com/h5py/h5py@master
 
 
 # Visualization with pandas
