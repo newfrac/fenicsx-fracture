@@ -41,6 +41,6 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: webpage
-          path: ;/_build/html
+          path: notebooks/_build/html
           retention-days: 2
           if-no-files-found: error
