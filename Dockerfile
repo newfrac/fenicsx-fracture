@@ -1,10 +1,4 @@
-FROM ghcr.io/fenics/dolfinx/lab:v0.6.0-r1
-
-RUN apt-get update && apt-get install -y libgl1-mesa-glx libxrender1 xvfb nodejs
-ENV PYVISTA_JUPYTER_BACKEND="static"
-
-ADD docker/requirements.txt requirements.txt
-RUN python3 -m pip install -r requirements.txt
+FROM ghcr.io/jorgensd/dolfinx-tutorial:v0.6.0.post0
 
 # create user with a home directory
 ARG NB_USER=jovyan

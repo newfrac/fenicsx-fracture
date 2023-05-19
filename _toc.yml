@@ -1,23 +1,23 @@
 format: jb-book
 root: index.md
 parts:
-- caption: Elasticity
-  chapters:
-  - file: linear-elasticity/00-Mesh.ipynb
-  - file: linear-elasticity/01-LinearElasticity.ipynb
-- caption: Linear elastic fracture mechanics
-  chapters:
-  - file: linear-elasticity/02-LEFM.ipynb
-- caption: Elastodynamics
-  chapters:
-  - file: elastodynamics/01-Elastodynamics.ipynb
-  - file: elastodynamics/02-Elastodynamics_explicit.ipynb
-- caption: Phase-field fracture models
-  chapters:
-  - file: phase-field/phase-field.ipynb
-- caption: Coupled Criterion
-  chapters:
-  - file: coupled-criterion/Coupled_Criterion.ipynb
-- caption: Utility functions
-  chapters:
-  - file: utils/README.md
+  - caption: Elasticity
+    chapters:
+      - file: notebooks/linear-elasticity/00-Mesh.ipynb
+      - file: notebooks/linear-elasticity/01-LinearElasticity.ipynb
+  - caption: Linear elastic fracture mechanics
+    chapters:
+      - file: notebooks/linear-elasticity/02-LEFM.ipynb
+  - caption: Elastodynamics
+    chapters:
+      - file: notebooks/elastodynamics/01-Elastodynamics.ipynb
+      - file: notebooks/elastodynamics/02-Elastodynamics_explicit.ipynb
+  - caption: Phase-field fracture models
+    chapters:
+      - file: notebooks/phase-field/phase-field.ipynb
+  - caption: Coupled Criterion
+    chapters:
+      - file: notebooks/coupled-criterion/Coupled_Criterion.ipynb
+  - caption: Utility functions
+    chapters:
+      - file: notebooks/utils/README.md
