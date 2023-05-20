@@ -1,10 +1,10 @@
 format: jb-book
 root: index.md
 parts:
-  - caption: Elasticity
-    chapters:
-      - file: notebooks/linear-elasticity/00-Mesh.ipynb
-      - file: notebooks/linear-elasticity/01-LinearElasticity.ipynb
+  #- caption: Elasticity
+  #  chapters:
+  #    #  - file: notebooks/linear-elasticity/00-Mesh.ipynb
+  #    - file: notebooks/linear-elasticity/01-LinearElasticity.ipynb
   - caption: Linear elastic fracture mechanics
     chapters:
       - file: notebooks/linear-elasticity/02-LEFM.ipynb

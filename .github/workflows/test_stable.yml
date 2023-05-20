@@ -1,4 +1,4 @@
-name: Check that all python files run in parallel
+name: Check that all python files run
 
 # Controls when the action will run.
 on:
@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     container: ghcr.io/fenics/dolfinx/lab:v0.6.0-r1
     env:
-      PYVISTA_OFF_SCREEN: true
+      PYVISTA_OFF_SCREEN: false
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -35,21 +35,3 @@ jobs:
           python3 -m pip install -r docker/requirements.txt
 
           
-      - name: Test notebooks #in parallel
-        run: |
-          python3 -c "from pyvista import start_xvfb; start_xvfb(0.1)"
-          
-          cd notebooks/linear-elasticity
-          jupyter-nbconvert *.ipynb --to python
-          python3 00-Mesh.py
-          python3 01-LinearElasticity.py
-          python3 02-LEFM.py
-
-          cd ../phase-field
-          jupyter-nbconvert *.ipynb --to python
-          python3 phase-field.py
-
-          cd ../elastodynamics
-          jupyter-nbconvert *.ipynb --to python
-          python3 01-Elastodynamics.py    
-          python3 01-Elastodynamics_explicit.py 

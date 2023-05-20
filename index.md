@@ -1,4 +1,4 @@
-## Newfrac computational platform website
+# Newfrac computational platform website
 
 This website a Jupyter-book
 

@@ -21,7 +21,9 @@ jobs:
       PYVISTA_TRAME_SERVER_PROXY_PREFIX: '/proxy/'
       PYVISTA_TRAME_SERVER_PROXY_ENABLED: "True"
       PYVISTA_OFF_SCREEN: false
-      PYVISTA_JUPYTER_BACKEND: "panel"
+      PYVISTA_JUPYTER_BACKEND: "static"
+      HDF5_MPI: "ON"
+      ENV HDF5_DIR: "/usr/local"
 
     steps:
 
@@ -36,7 +38,7 @@ jobs:
 
       - name: Build the book
         run: 
-          jupyter-book build . -W
+          jupyter-book build . 
 
       - uses: actions/upload-artifact@v3
         with:

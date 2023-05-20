@@ -14,7 +14,7 @@ def generate_mesh_with_crack(
     dist_max=0.3,
     refinement_ratio=10,
     gdim=2,
-    verbosity=10
+    verbosity=4
 ):
 
     mesh_comm = MPI.COMM_WORLD

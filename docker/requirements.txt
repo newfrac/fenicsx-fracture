@@ -1,21 +1,18 @@
-#book
-jupyter-book
-nbconvert
-
 # General tools
 sympy
 scipy 
 pyaml
 
 # Pyvista
-panel
-trame 
+panel 
 
 # Jupyter-book
 jupyter-book
+#nbconvert
+jupytext
 
 # Meshio and gmsh
-meshio
+#meshio
 gmsh
 
 
