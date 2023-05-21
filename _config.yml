@@ -31,11 +31,6 @@ launch_buttons:
   notebook_interface: "jupyterlab"
   binderhub_url: "https://mybinder.org"
 
-sphinx:
-  config:
-    html_last_updated_fmt: "%b %d, %Y"
-    suppress_warnings: ["mystnb.unknown_mime_type"]
-
 parse:
   myst_enable_extensions:
     - "amsmath"
@@ -43,7 +38,7 @@ parse:
     - "deflist"
     - "dollarmath"
     - "html_admonition"
-    - "html_image"git a
+    - "html_image"
     - "linkify"
     - "replacements"
     - "smartquotes"
@@ -53,11 +48,10 @@ sphinx:
   recursive_update: true
   config:
     html_theme_options:
-      repository_provider: custom   
-
-html_theme_options:
-    repository_provider: "github"  # or "github", "bitbucket",
-    repository_url: "https://github.com/newfrac/fenicsx-fracture"
+      repository_provider: "github" # or "github", "bitbucket",
+      repository_url: "https://github.com/newfrac/fenicsx-fracture"
+    html_last_updated_fmt: "%b %d, %Y"
+    suppress_warnings: ["mystnb.unknown_mime_type"]
 
 html:
   use_issues_button: false
