@@ -43,15 +43,25 @@ parse:
     - "deflist"
     - "dollarmath"
     - "html_admonition"
-    - "html_image"
+    - "html_image"git a
     - "linkify"
     - "replacements"
     - "smartquotes"
     - "substitution"
 
+sphinx:
+  recursive_update: true
+  config:
+    html_theme_options:
+      repository_provider: custom   
+
+html_theme_options:
+    repository_provider: "github"  # or "github", "bitbucket",
+    repository_url: "https://github.com/newfrac/fenicsx-fracture"
+
 html:
   use_issues_button: false
-  use_repository_button: false
+  use_repository_button: true
   use_edit_page_button: false
 
   extra_footer: |
