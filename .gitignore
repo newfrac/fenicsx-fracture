@@ -137,6 +137,7 @@ notebooks/01-linear-elasticity/mesh.msh
 notebooks/*/output/*
 notebooks/*/*.h5
 notebooks/*/*.xmdf
+notebooks/*.xmdf
 
 # vscode
 .vscode
