@@ -40,6 +40,11 @@ parse:
     - "smartquotes"
     - "substitution"
 
+sphinx:
+  recursive_update: true
+  config:
+    html_theme_options:
+      repository_provider: custom
 # sphinx:
 #   config:
 #     nb_custom_formats:
