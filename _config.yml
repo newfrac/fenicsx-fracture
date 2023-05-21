@@ -27,6 +27,15 @@ repository:
 bibtex_bibfiles:
   - references.bib
 
+launch_buttons:
+  notebook_interface: "jupyterlab"
+  binderhub_url: "https://mybinder.org"
+
+sphinx:
+  config:
+    html_last_updated_fmt: "%b %d, %Y"
+    suppress_warnings: ["mystnb.unknown_mime_type"]
+
 parse:
   myst_enable_extensions:
     - "amsmath"
@@ -40,22 +49,9 @@ parse:
     - "smartquotes"
     - "substitution"
 
-sphinx:
-  recursive_update: true
-  config:
-    html_theme_options:
-      repository_provider: custom
-# sphinx:
-#   config:
-#     nb_custom_formats:
-#         .Rmd:
-#             - jupytext.reads
-#             - fmt: Rmd
-# Add GitHub buttons to your book
-# See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
 html:
   use_issues_button: false
-  use_repository_button: true
+  use_repository_button: false
   use_edit_page_button: false
 
   extra_footer: |
