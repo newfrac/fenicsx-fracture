@@ -29,7 +29,7 @@ bibtex_bibfiles:
 
 launch_buttons:
   notebook_interface: "jupyterlab"
-  binderhub_url: "https://mybinder.org"
+  binderhub_url: "https://mybinder.org/v2/gh/newfrac/fenicsx-fracture/HEAD"
 
 parse:
   myst_enable_extensions:

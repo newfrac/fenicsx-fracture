@@ -1,25 +1,24 @@
-# Newfrac computational platform website
+# Computatioanl Fracture Mechanics Examples Using Fenicsx
 
-This website a Jupyter-book
+This webpage provides basic examples on computational methods to solve fracture mechanics problems using [DOLFINx](https://github.com/FEniCS/dolfinx/).
+
+This work includes the contribution of the Early Stage Researchers (ESR) of the ITN project [Newfrac](https://www.newfrac.eu) funded by the European Commission under a Marie Skłodowska-Curie Actions Grant Agreement n. 861061.
+
+DOLFINx documentation can be found on the website or on the excellent [Dolfinx Tutorial](https://jsdokken.com/dolfinx-tutorial/) by Jørgen Schartum Dokken.
+
+The webpage is build using Jupyter-book, reusing the configuration of the [Dolfinx Tutorial](https://jsdokken.com/dolfinx-tutorial/).
+
+Comments and corrections to this webpage should be submitted to the issue tracker by going to the relevant page, then click the ![git](git.png)-symbol in the top right corner and "open issue".
+
+**Interactive tutorials**
+
+As this book has been published as a Jupyter Book, we provide interactive notebooks that can be run in the browser. To start such a notebook click the ![Binder symbol](binder.png)-symbol in the top right corner of the relevant tutorial.
 
 ## Usage
 
 ### Building the book
 
-If you'd like to develop on and build the my-book book, you should:
-
-- Clone this repository and run
-- Run `pip install -r requirements.txt` (it is recommended you do this within a virtual environment)
-- (Recommended) Remove the existing `book/_build/` directory
-- Run `jupyter-book/`
- build boo
-A fully-rendered HTML version of the book will be built in `book/_build/html/`.
-
-### Hosting the book
-
-The html version of the book is hosted on the gitlab Pages branch of this repo. A Gitlab CI workflow has been created that automatically builds and pushes the book to this branch on a push or pull request to main.
-
-This will automatically push your build to the Gitlab CI. More information on this hosting process can be found [here](https://jupyterbook.org/publish/gh-pages.html#manually-host-your-book-with-github-pages).
+- Run `jupyter-book build .` A fully-rendered HTML version of the book will be built in `book/_build/html/`.
 
 ### How to contribute
 

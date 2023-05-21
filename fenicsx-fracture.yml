@@ -1,8 +1,8 @@
-name : fenicsx-fracture
-channels :
+name: fenicsx-fracture
+channels:
   - conda-forge
   - defaults
-dependencies :
+dependencies:
   - fenics-dolfinx==0.6.0
   - matplotlib
   - numba
@@ -19,13 +19,9 @@ dependencies :
   - flake8
   - autoflake
   - pyaml
-  - pandas 
+  - pandas
   - jupyterlab
-  - pip 
+  - pip
   - pyvista
   - ipygany
-
-
-
-    
-
+  - jupytext
