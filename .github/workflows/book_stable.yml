@@ -20,7 +20,7 @@ jobs:
     env:
       PYVISTA_TRAME_SERVER_PROXY_PREFIX: '/proxy/'
       PYVISTA_TRAME_SERVER_PROXY_ENABLED: "True"
-      PYVISTA_OFF_SCREEN: false
+      PYVISTA_OFF_SCREEN: true
       PYVISTA_JUPYTER_BACKEND: "static"
       HDF5_MPI: "ON"
       ENV HDF5_DIR: "/usr/local"
@@ -43,6 +43,6 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: webpage
-          path: ;/_build/html
+          path: _build/html
           retention-days: 2
           if-no-files-found: error

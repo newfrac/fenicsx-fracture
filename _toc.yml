@@ -12,9 +12,9 @@ parts:
     chapters:
       - file: notebooks/elastodynamics/01-Elastodynamics.ipynb
       - file: notebooks/elastodynamics/02-Elastodynamics_explicit.ipynb
-  - caption: Phase-field fracture models
-    chapters:
-      - file: notebooks/phase-field/phase-field.ipynb
+  #- caption: Phase-field fracture models
+  #  chapters:
+  #    - file: notebooks/phase-field/phase-field.ipynb
   - caption: Coupled Criterion
     chapters:
       - file: notebooks/coupled-criterion/Coupled_Criterion.ipynb
