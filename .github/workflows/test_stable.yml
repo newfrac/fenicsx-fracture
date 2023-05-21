@@ -34,4 +34,22 @@ jobs:
         run: |
           python3 -m pip install -r docker/requirements.txt
 
-          
+      - name: Test notebooks #in parallel
+        run: |
+          python3 -c "from pyvista import start_xvfb; start_xvfb(0.1)"
+
+          cd notebooks/linear-elasticity
+          jupytext *.ipynb --to py
+          python3 00-Mesh.py
+          python3 01-LinearElasticity.py
+          python3 02-LEFM.py
+  
+          cd ../phase-field
+          jupytext *.ipynb --to py
+          python3 phase-field.py
+      
+          cd ../elastodynamics
+          jupytext *.ipynb --to py
+          python3 01-Elastodynamics.py    
+          python3 01-Elastodynamics_explicit.py 
+  

@@ -19,7 +19,7 @@ execute:
 
 # Information about where the book exists on the web
 repository:
-  url: hhttps://gitlab.com/newfrac/fenicsx-fracture # Online location of your book
+  url: https://newfrac.github.io/fenicsx-fracture/ # Online location of your book
   path_to_book: . # Optional path to your book, relative to the repository root
   branch: main # Which branch of the repository should be used when creating links (optional)
 
@@ -39,7 +39,6 @@ parse:
     - "replacements"
     - "smartquotes"
     - "substitution"
-
 
 # sphinx:
 #   config:
