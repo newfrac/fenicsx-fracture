@@ -10,22 +10,13 @@ The webpage is build using Jupyter-book, reusing the configuration of the [Dolfi
 
 Comments and corrections to this webpage should be submitted to the issue tracker by going to the relevant page, then click the ![git](git.png)-symbol in the top right corner and "open issue".
 
-**Interactive tutorials**
-
-As this book has been published as a Jupyter Book, we provide interactive notebooks that can be run in the browser. To start such a notebook click the ![Binder symbol](binder.png)-symbol in the top right corner of the relevant tutorial.
-
 ## Usage
 
-### Building the book
+See the file [README.md](README.md) for how to use docker image or install dependencies with conda.
 
-- Run `jupyter-book build .` A fully-rendered HTML version of the book will be built in `book/_build/html/`.
+### Interactive tutorials
 
-### How to contribute
-
-All the material of the webpage is in the [book](https://gitlab.com/newfrac/newfrac.gitlab.io/-/tree/master/book) directory.
-
-- To modify a page: just edit the .md file regenerate the book (locally by running `jupyter-book build book/` or authomatically with the `CI` in gitlab )
-- To add a page: add the file and/or directory at the appropriate place inside the [book](https://gitlab.com/newfrac/newfrac.gitlab.io/-/tree/master/book) directory and update the [_toc.yml](https://gitlab.com/newfrac/newfrac.gitlab.io/-/blob/master/book/_toc.yml) to add the file/directory in the appropriate place in the table-of-contents.
+As this book has been published as a Jupyter Book, we provide interactive notebooks that can be run in the browser. To start such a notebook click the ![Binder symbol](binder.png)-symbol in the top right corner of the relevant tutorial.
 
 ## Credits
 

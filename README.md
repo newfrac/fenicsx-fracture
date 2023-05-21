@@ -1,6 +1,6 @@
 # FEniCSx Fracture mechanics examples
 
-This repository automatically generates a jupyter-book here: `https://newfrac.gitlab.io/fenicsx-fracture/`
+This repository automatically generates a jupyter-book here: `https://newfrac.github.io/fenicsx-fracture/`
 
 ## Installation
 
