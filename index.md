@@ -1,4 +1,4 @@
-# Computational fracture mechanics examples ysing `fenicsx`
+# Computational fracture mechanics examples with fenicsx
 
 This webpage provides basic examples on computational methods to solve fracture mechanics problems using [DOLFINx](https://github.com/FEniCS/dolfinx/).
 
