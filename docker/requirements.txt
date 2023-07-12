@@ -27,3 +27,4 @@ tqdm
 pytest
 pytest-xdist 
 nbmake
+ipyparallel
