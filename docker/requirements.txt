@@ -25,4 +25,5 @@ tqdm
 
 # add pytest and nbmake
 pytest
+pytest-xdist 
 nbmake

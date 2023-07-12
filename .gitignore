@@ -157,3 +157,4 @@ builds
 .DS_Store
 .xdmf
 .h5
+notebooks/elastodynamics/implicit_dynamics.xdmf

@@ -1,3 +1,6 @@
+[![Notebook CI](https://github.com/newfrac/fenicsx-fracture/blob/main/.github/workflows/test_stable.yml/badge.svg)](https://github.com/newfrac/fenicsx-fracture/blob/main/.github/workflows/test_stable.yml)
+[![Book CI](https://github.com/newfrac/fenicsx-fracture/blob/main/.github/workflows/book_stable.yml/badge.svg)](https://github.com/newfrac/fenicsx-fracture/blob/main/.github/workflows/book_stable.yml)
+
 # FEniCSx Fracture mechanics examples
 
 This repository automatically generates a jupyter-book here: `https://newfrac.github.io/fenicsx-fracture/`
