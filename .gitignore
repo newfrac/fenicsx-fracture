@@ -153,3 +153,7 @@ notebooks/Phase-field/phase-field.py
 
 #gitlab CI
 builds
+
+.DS_Store
+.xdmf
+.h5
