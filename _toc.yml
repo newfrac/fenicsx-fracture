@@ -15,6 +15,9 @@ parts:
   - caption: Phase-field fracture models
     chapters:
       - file: notebooks/phase-field/phase-field.ipynb
+  - caption: Elasto-plasticity
+    chapters:
+      - file: notebooks/plasticity/plasticity.ipynb
   - caption: Coupled Criterion
     chapters:
       - file: notebooks/coupled-criterion/Coupled_Criterion.ipynb
