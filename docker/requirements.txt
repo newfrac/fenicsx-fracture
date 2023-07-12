@@ -23,3 +23,6 @@ pandas
 # Progress bar
 tqdm
 
+# add pytest and nbmake
+pytest
+nbmake
