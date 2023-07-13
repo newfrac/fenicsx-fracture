@@ -37,4 +37,4 @@ jobs:
       - name: Test notebooks 
         run: |
           cd notebooks
-          pytest  --nbmake -n=auto --ignore=coupled-criterion/Coupled_Criterion.ipynb
+          pytest  --nbmake -n=auto 
