@@ -11,7 +11,7 @@ parts:
   - caption: Elastodynamics
     chapters:
       - file: notebooks/elastodynamics/01-Elastodynamics-Theory.ipynb
-      - file: notebooks/elastodynamics/02-Elastodynamics_Implementation.ipynb
+      - file: notebooks/elastodynamics/02-Elastodynamics-Implementation.ipynb
       - file: notebooks/elastodynamics/03-Elastodynamics_Explicit-Theory.ipynb
       - file: notebooks/elastodynamics/04-Elastodynamics_Explicit-Implementation.ipynb 
   - caption: Phase-field fracture models
