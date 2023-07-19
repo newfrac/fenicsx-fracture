@@ -3,7 +3,7 @@
 
 title: FEniCSx Fracture Mechanics
 author: Newfrac Network
-logo: images/logo.jpeg
+logo: images/logo.png
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
@@ -57,10 +57,11 @@ html:
   use_issues_button: false
   use_repository_button: true
   use_edit_page_button: false
+  google_analytics_id: G-396492403
 
   extra_footer: |
     <div>
-      Funded by the European Commission under a Marie Skłodowska-Curie Actions Grant Agreement n. 861061. 
+        Funded by European Union’s Horizon 2020 research and innovation programme under a Marie Skłodowska-Curie Actions Grant Agreement n. 861061 – Project NEWFRAC
     </div>
 
 exclude_patterns: [README.md]
