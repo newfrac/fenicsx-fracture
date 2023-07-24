@@ -13,20 +13,20 @@ parts:
       - file: notebooks/elastodynamics/01-Elastodynamics-Theory.ipynb
       - file: notebooks/elastodynamics/02-Elastodynamics-Implementation.ipynb
       - file: notebooks/elastodynamics/03-Elastodynamics_Explicit-Theory.ipynb
-      - file: notebooks/elastodynamics/04-Elastodynamics_Explicit-Implementation.ipynb 
+      - file: notebooks/elastodynamics/04-Elastodynamics_Explicit-Implementation.ipynb
   - caption: Phase-field fracture models
     chapters:
       - file: notebooks/phase-field/phase-field.ipynb
   - caption: Dynamic Phase field fracture models
     chapters:
       - file: notebooks/phase-field-dynamics/01-Elastodynamics-damage-Theory.ipynb
-      - file: notebooks/phase-field-dynamics/02-Elastodynamics-damage-Implementation.ipynb 
+      - file: notebooks/phase-field-dynamics/02-Elastodynamics-damage-Implementation.ipynb
   - caption: Elasto-plasticity
     chapters:
       - file: notebooks/plasticity/plasticity.ipynb
   - caption: Coupled Criterion
     chapters:
       - file: notebooks/coupled-criterion/Coupled_Criterion.ipynb
-  - caption: Utility functions
-    chapters:
-      - file: notebooks/utils/README.md
+  #- caption: Utility functions
+  #  chapters:
+  #    - file: notebooks/utils/README.md
