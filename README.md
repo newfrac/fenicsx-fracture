@@ -9,14 +9,14 @@ This repository automatically generates a jupyter-book here: `https://newfrac.gi
 
 ### Conda
 
-To create the conda environement and activate it
+To create the conda environment and activate it
 
 ```bash
 conda env create -f fenicsx-fracture.yml
 conda activate fenicsx-fracture
 ```
 
-To generate the book the book locally:
+To generate the book locally:
 
 ```bash
 jupyter-book build notebooks
