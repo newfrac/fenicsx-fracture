@@ -35,35 +35,10 @@ docker build -t fenicsx-fracture -f docker/Dockerfile .
 from the root of this repository. To create a one-time usage container you can call:
 
 ```
-docker run -ti -v $(pwd):/root/shared -w /root/shared --rm fenicsx-fracture
-```
-
-```
 docker run --rm -ti -v $(pwd):/root/shared -w /root/shared  --init -p 8888:8888 fenicsx-fracture
 ```
 
-# Docker images
-
-Docker images for this tutorial can be found in the [packages tab](https://github.com/jorgensd/dolfinx-tutorial/pkgs/container/dolfinx-tutorial) of the dolfinx-tutorial
-
-Additional requirements on top of the `dolfinx/lab` images can be found at [Dockerfile](docker/Dockerfile) and [requirements.txt](docker/requirements.txt)
-
-##
-
-An image building DOLFINx, Basix, UFL and FFCx from source can be built using:
-
-```bash
-cd docker
-docker build -f LocalDockerfile -t local_lab_env .
-```
-
-and run
-
-```bash
- docker run --rm -ti -v $(pwd):/root/shared -w /root/shared  --init -p 8888:8888 local_lab_env
- ```
-
-from the main directory.
+You can then access the jupyter lab notebook at `http://localhost:8888` in your browser.
 
 ## Binder
 

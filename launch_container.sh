@@ -1,5 +1,5 @@
 #!/bin/bash
-docker pull jhale/newfrac-fenicsx-training
-docker stop dolfinx-newfrac
-docker rm dolfinx-newfrac
-docker run --init -p 8888:8888 --name dolfinx-newfrac -v "$(pwd)":/root/shared jhale/newfrac-fenicsx-training
+docker pull cmaurini/fenicsx-fracture
+docker stop fenicsx-fracture
+docker rm fenicsx-fracture
+docker run --rm -ti -v $(pwd):/root/shared -w /root/shared  --init -p 8888:8888 fenicsx-fracture
