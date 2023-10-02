@@ -1,10 +1,8 @@
-# Computational fracture mechanics examples with fenicsx
+# Computational fracture mechanics examples with FEniCSx
 
 This webpage provides basic examples on computational methods to solve fracture mechanics problems using [DOLFINx](https://github.com/FEniCS/dolfinx/).
 
 This work includes the contribution of the Early Stage Researchers (ESR) of the ITN project [Newfrac](https://www.newfrac.eu) funded by the European Commission under a Marie Skłodowska-Curie Actions Grant Agreement n. 861061.
-
-DOLFINx documentation can be found on the website or on the excellent [Dolfinx Tutorial](https://jsdokken.com/dolfinx-tutorial/) by Jørgen Schartum Dokken.
 
 The webpage is build using Jupyter-book, reusing the configuration of the [Dolfinx Tutorial](https://jsdokken.com/dolfinx-tutorial/).
 

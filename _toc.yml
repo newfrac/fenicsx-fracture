@@ -1,8 +1,11 @@
 format: jb-book
 root: index.md
+
+# include the README.md file in the build
 parts:
   - caption: Elasticity
     chapters:
+      - file: README.md
       - file: notebooks/linear-elasticity/00-Mesh.ipynb
       - file: notebooks/linear-elasticity/01-LinearElasticity.ipynb
   - caption: Linear elastic fracture mechanics
@@ -27,6 +30,7 @@ parts:
   - caption: Coupled Criterion
     chapters:
       - file: notebooks/coupled-criterion/Coupled_Criterion.ipynb
+
   #- caption: Utility functions
   #  chapters:
   #    - file: notebooks/utils/README.md

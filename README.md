@@ -19,7 +19,7 @@ conda activate fenicsx-fracture
 To generate the book locally:
 
 ```bash
-jupyter-book build notebooks
+jupyter-book build .
 ```
 
 To visualize the results, open in your browser the generated file `_build/html/index.html`.
@@ -38,7 +38,9 @@ from the root of this repository. To create a one-time usage container you can c
 docker run --rm -ti -v $(pwd):/root/shared -w /root/shared  --init -p 8888:8888 fenicsx-fracture
 ```
 
-You can then access the jupyter lab notebook at `http://localhost:8888` in your browser.
+You can then access the jupyter lab notebook at `http://localhost:8888` in your browser. 
+
+If you do not have docker installed, you can install it from [here](https://docs.docker.com/get-docker/).
 
 ## Binder
 
