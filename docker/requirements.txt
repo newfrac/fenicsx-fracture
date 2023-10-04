@@ -5,6 +5,7 @@ pyaml
 
 # Pyvista
 panel 
+#pyvista
 
 # Jupyter-book
 jupyter-book
