@@ -8,16 +8,37 @@ The webpage is build using Jupyter-book, reusing the configuration of the [Dolfi
 
 Comments and corrections to this webpage should be submitted to the issue tracker by going to the relevant page, then click the ![git](git.png)-symbol in the top right corner and "open issue".
 
-### Interactive tutorials
-
-As this book has been published as a Jupyter Book, we provide interactive notebooks that can be run in the browser. To start such a notebook click the ![Binder symbol](binder.png)-symbol in the top right corner of the relevant tutorial.
-
-[![Notebook CI](https://github.com/newfrac/fenicsx-fracture/blob/main/.github/workflows/test_stable.yml/badge.svg)](https://github.com/newfrac/fenicsx-fracture/blob/main/.github/workflows/test_stable.yml)
-[![Book CI](https://github.com/newfrac/fenicsx-fracture/blob/main/.github/workflows/book_stable.yml/badge.svg)](https://github.com/newfrac/fenicsx-fracture/blob/main/.github/workflows/book_stable.yml)
-
 ### Installation
 
+To run this notebooks on your computer, we suggest using Docker or Conda, as exaplained below.
+
+### Docker
+
+1. First, install docker for your operating system. You can find instructions here: https://docs.docker.com/get-docker/
+
+2. Download and unzip the present repository. If you have git installed, you can clone the repository with `git clone 
+https://github.com/newfrac/fenicsx-fracture.git`.  
+Otherwise download and unzip the file  `https://github.com/newfrac/fenicsx-fracture/archive/refs/heads/main.zip`. 
+
+3. To build a docker image for this documentation, you can run from the root of the downloaded repository (use the `PowerShell` if you are on Windows)
+
+```
+docker build -t fenicsx-fracture -f docker/Dockerfile .
+```
+
+4. To create a one-time usage container you can call:
+
+```
+docker run --rm -ti -v $(pwd):/root/shared -w /root/shared  --init -p 8888:8888 fenicsx-fracture
+```
+
+You can then access the jupyter lab notebook at `http://localhost:8888` in your browser.
+
+Steps 1-3 need to be done only the first time. After, you can then start the container with the command in step 4 directly.
+
 #### Conda
+
+To run the notebooks locally, we recommend to use the conda environment provided in this repository. To install conda, please follow the instructions [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/).
 
 To create the conda environment and activate it
 
@@ -25,32 +46,6 @@ To create the conda environment and activate it
 conda env create -f fenicsx-fracture.yml
 conda activate fenicsx-fracture
 ```
-
-To generate the book locally:
-
-```bash
-jupyter-book build .
-```
-
-To visualize the results, open in your browser the generated file `_build/html/index.html`.
-
-#### Docker
-
-To build a docker image for this documentation, you can run
-
-```
-docker build -t fenicsx-fracture -f docker/Dockerfile .
-```
-
-from the root of this repository. To create a one-time usage container you can call:
-
-```
-docker run --rm -ti -v $(pwd):/root/shared -w /root/shared  --init -p 8888:8888 fenicsx-fracture
-```
-
-You can then access the jupyter lab notebook at `http://localhost:8888` in your browser. 
-
-If you do not have docker installed, you can install it from [here](https://docs.docker.com/get-docker/).
 
 #### Binder
 
@@ -66,6 +61,18 @@ innovation programme under Marie Skłodowska-Curie grant agreement No.
 
 
 This project is created using the open source [Jupyter Book project](https://jupyterbook.org/) and the book of [dolfinx-tutorial](https://github.com/jorgensd/dolfinx-tutorial/blob/dokken/jupyterbook/Dockerfile) as a template.
+
+
+## Building the book locally (for developers)
+
+To generate the book locally:
+
+```bash
+jupyter-book build .
+```
+
+To visualize the results, open in your browser the generated file `_build/html/index.html`.
+
 
 ## License
 
