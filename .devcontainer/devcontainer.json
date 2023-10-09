@@ -1,0 +1,29 @@
+{
+  "name": "FEniCSx",
+  "dockerFile": "../docker/Dockerfile",
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
+  "extensions": [
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "ms-toolsai.jupyter",
+    "ms-toolsai.jupyter-keymap",
+    "ms-toolsai.jupyter-renderers",
+    "vscode-icons-team.vscode-icons",
+    "wayou.vscode-todo-highlight",
+    "timonwong.shellcheck"
+    ],
+  "forwardPorts": [
+    8888
+  ],
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
+  ],
+  "runArgs": [
+    "--cap-add=SYS_PTRACE",
+    "--security-opt",
+    "seccomp=unconfined"
+  ],
+  "postCreateCommand": "jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root"
+}
