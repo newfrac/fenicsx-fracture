@@ -157,6 +157,5 @@ builds
 .DS_Store
 .xdmf
 .h5
-notebooks/elastodynamics/implicit_dynamics.xdmf
-notebooks/phase-field-dynamics/implicit_elastodynamics_damage.xdmf
 notebooks/*/*.xdmf
+notebooks/*/*.h5
