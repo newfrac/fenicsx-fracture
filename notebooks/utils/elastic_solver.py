@@ -1,4 +1,5 @@
 import sys
+
 sys.path.append("../python")
 
 # Import required libraries
@@ -17,6 +18,7 @@ from petsc4py.PETSc import ScalarType
 
 from meshes import generate_mesh_with_crack
 
+
 def solve_elasticity(
     nu=0.3,
     E=1,
@@ -28,7 +30,7 @@ def solve_elasticity(
     refinement_ratio=10,
     dist_min=0.2,
     dist_max=0.3,
-    verbosity=10
+    verbosity=10,
 ):
     msh, mt, ft = generate_mesh_with_crack(
         Lcrack=Lcrack,
@@ -38,10 +40,9 @@ def solve_elasticity(
         refinement_ratio=refinement_ratio,  # how much it is refined at the tip zone
         dist_min=dist_min,  # radius of tip zone
         dist_max=dist_max,  # radius of the transition zone
-        verbosity=verbosity
+        verbosity=verbosity,
     )
-    element = ufl.VectorElement("Lagrange", msh.ufl_cell(), degree=1, dim=2)
-    V = fem.FunctionSpace(msh, element)
+    V = fem.functionspace(msh, ("Lagrange", 1, (2,)))
 
     def bottom_no_crack(x):
         return np.logical_and(np.isclose(x[1], 0.0), x[0] > Lcrack)
@@ -56,7 +57,9 @@ def solve_elasticity(
         V.sub(1), msh.topology.dim - 1, bottom_no_crack_facets
     )
 
-    right_facets = mesh.locate_entities_boundary(msh, msh.topology.dim - 1, right)
+    right_facets = mesh.locate_entities_boundary(
+        msh, msh.topology.dim - 1, right
+    )
     right_dofs_x = fem.locate_dofs_topological(
         V.sub(0), msh.topology.dim - 1, right_facets
     )
@@ -65,7 +68,9 @@ def solve_elasticity(
     bcs = [bc_bottom, bc_right]
 
     dx = ufl.Measure("dx", domain=msh)
-    top_facets = mesh.locate_entities_boundary(msh, 1, lambda x: np.isclose(x[1], Ly))
+    top_facets = mesh.locate_entities_boundary(
+        msh, 1, lambda x: np.isclose(x[1], Ly)
+    )
     mt = mesh.meshtags(msh, 1, top_facets, 1)
     ds = ufl.Measure("ds", subdomain_data=mt)
 
@@ -99,7 +104,10 @@ def solve_elasticity(
         return ufl.dot(b, v) * dx + ufl.dot(f, v) * ds(1)
 
     problem = fem.petsc.LinearProblem(
-        a(u, v), L(v), bcs=bcs, petsc_options={"ksp_type": "preonly", "pc_type": "lu"}
+        a(u, v),
+        L(v),
+        bcs=bcs,
+        petsc_options={"ksp_type": "preonly", "pc_type": "lu"},
     )
     uh = problem.solve()
     uh.name = "displacement"
