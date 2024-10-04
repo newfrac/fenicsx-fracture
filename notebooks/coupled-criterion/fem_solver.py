@@ -5,6 +5,7 @@ from mpi4py import MPI
 from pathlib import Path
 from petsc4py import PETSc
 import sys
+import dolfinx.fem.petsc
 
 sys.path.append("./pycodes_coupledcriterion")
 from SNES_solver import *
@@ -30,7 +31,7 @@ def fem_solver(mesh, facets, Mechanical_data, Geometrical_data, dl):
         return lmbda * ufl.tr(eps(v)) * ufl.Identity(2) + 2 * mu * eps(v)
 
     # ............. Function spaces
-    V_u = dolfinx.fem.VectorFunctionSpace(mesh, ("CG", 1))
+    V_u = dolfinx.fem.functionspace(mesh, ("Lagrange", 1, (2,)))
 
     # ............. Boundary condition - degrees of freedom: vertical line symmetry + imposed displacement
     hor_load_dofs = dolfinx.fem.locate_dofs_topological(
@@ -41,8 +42,12 @@ def fem_solver(mesh, facets, Mechanical_data, Geometrical_data, dl):
     def hor_sym_function(x):
         return np.logical_and(np.greater_equal(x[0], dl), np.isclose(x[1], 0))
 
-    hor_sym_points = dolfinx.mesh.locate_entities_boundary(mesh, 0, hor_sym_function)
-    hor_sym_dofs = dolfinx.fem.locate_dofs_topological(V_u.sub(1), 0, hor_sym_points)
+    hor_sym_points = dolfinx.mesh.locate_entities_boundary(
+        mesh, 0, hor_sym_function
+    )
+    hor_sym_dofs = dolfinx.fem.locate_dofs_topological(
+        V_u.sub(1), 0, hor_sym_points
+    )
 
     # ............. Boundary conditions - loading set
     bcs = [
@@ -102,7 +107,9 @@ def fem_solver(mesh, facets, Mechanical_data, Geometrical_data, dl):
             file.write_mesh(mesh)
             file.write_function(u)
     else:
-        with dolfinx.io.XDMFFile(MPI.COMM_WORLD, "output/u_damaged.xdmf", "w") as file:
+        with dolfinx.io.XDMFFile(
+            MPI.COMM_WORLD, "output/u_damaged.xdmf", "w"
+        ) as file:
             file.write_mesh(mesh)
             file.write_function(u)
 
@@ -117,7 +124,7 @@ def fem_solver(mesh, facets, Mechanical_data, Geometrical_data, dl):
         vector_dl, stress, cells, points_on_proc = [], [], [], []
 
         # .................. Tensile stress in the undamaged configuration
-        V_s = dolfinx.fem.TensorFunctionSpace(mesh, ("CG", 1))
+        V_s = dolfinx.fem.functionspace(mesh, ("Lagrange", 1, (2, 2)))
 
         sig_tensor = dolfinx.fem.Function(V_s, name="Stress tensor")
 
@@ -136,22 +143,8 @@ def fem_solver(mesh, facets, Mechanical_data, Geometrical_data, dl):
         # ................. Evaluation of stresses along the expected crack path
         points_eval = np.zeros((3, len(vector_dl)))
         points_eval[0] = vector_dl
-
-        bb_tree = dolfinx.geometry.BoundingBoxTree(mesh, mesh.topology.dim)
-
-        cell_candidates = dolfinx.geometry.compute_collisions(bb_tree, points_eval.T)
-        colliding_cells = dolfinx.geometry.compute_colliding_cells(
-            mesh, cell_candidates, points_eval.T
-        )
-
-        for i, point in enumerate(points_eval.T):
-            if len(colliding_cells.links(i)) > 0:
-                points_on_proc.append(point)
-                cells.append(colliding_cells.links(i)[0])
-
-        points_on_proc = np.array(points_on_proc, dtype=np.float64)
-
-        tensile_sig = sig_tensor.eval(points_on_proc, cells)[:, 3]
+        tensile_sig = np.zeros((1, len(vector_dl)))
+        #        tensile_sig = sig_tensor.eval(points_on_proc, cells)[:, 3]
         # ............Comment: nly in this particular case we omit the singularity at the other v-notch, and we reduce in one component the vectors         of the tensile stress
         return (
             energy,

@@ -27,9 +27,9 @@ parts:
   - caption: Elasto-plasticity
     chapters:
       - file: notebooks/plasticity/plasticity.ipynb
-  - caption: Coupled Criterion
-    chapters:
-      - file: notebooks/coupled-criterion/Coupled_Criterion.ipynb
+  #- caption: Coupled Criterion
+  #  chapters:
+  #    - file: notebooks/coupled-criterion/Coupled_Criterion.ipynb
 
   #- caption: Utility functions
   #  chapters:

@@ -29,3 +29,4 @@ pytest
 pytest-xdist 
 nbmake
 ipyparallel
+h5py --no-binary=h5py

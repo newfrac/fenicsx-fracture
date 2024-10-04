@@ -33,7 +33,6 @@ jobs:
       - name: Install book deps
         run:
           python3 -m pip install -r docker/requirements.txt
-          python3 -m pip install --no-binary=h5py .
 
 
       - name: Build the book

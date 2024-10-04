@@ -29,7 +29,7 @@ def create_grid(mesh):
 
     V = dolfinx.fem.FunctionSpace(mesh, ("CG", 1))
     # Create pyvista grid
-    topology, cell_types, geometry = dolfinx.plot.create_vtk_mesh(V)
+    topology, cell_types, geometry = dolfinx.plot.vtk_mesh(V)
     return pyvista.UnstructuredGrid(topology, cell_types, geometry)
 
 
