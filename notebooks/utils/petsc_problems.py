@@ -1,10 +1,10 @@
-
 import ufl
 from dolfinx import fem
 from petsc4py import PETSc
+import dolfinx.fem.petsc
+
 
 class SNESProblem:
-
     def __init__(self, F, u, bcs, J=None):
         V = u.function_space
         du = ufl.TrialFunction(V)
@@ -19,9 +19,13 @@ class SNESProblem:
 
     def F(self, snes, x, F):
         """Assemble residual vector."""
-        x.ghostUpdate(addv=PETSc.InsertMode.INSERT, mode=PETSc.ScatterMode.FORWARD)
+        x.ghostUpdate(
+            addv=PETSc.InsertMode.INSERT, mode=PETSc.ScatterMode.FORWARD
+        )
         x.copy(self.u.vector)
-        self.u.vector.ghostUpdate(addv=PETSc.InsertMode.INSERT, mode=PETSc.ScatterMode.FORWARD)
+        self.u.vector.ghostUpdate(
+            addv=PETSc.InsertMode.INSERT, mode=PETSc.ScatterMode.FORWARD
+        )
 
         with F.localForm() as f_local:
             f_local.set(0.0)

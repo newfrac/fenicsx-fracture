@@ -159,3 +159,5 @@ builds
 .h5
 notebooks/*/*.xdmf
 notebooks/*/*.h5
+notebooks/*/*/*.xdmf
+notebooks/*/*/*.h5

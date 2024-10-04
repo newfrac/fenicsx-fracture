@@ -3,7 +3,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - fenics-dolfinx==0.7.0
+  - fenics-dolfinx==0.8.0
   - matplotlib
   - numba
   - numpy
