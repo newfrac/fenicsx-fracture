@@ -25,3 +25,4 @@ dependencies:
   - pyvista
   - ipygany
   - jupytext
+  - ipyparallel

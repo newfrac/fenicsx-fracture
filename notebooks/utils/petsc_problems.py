@@ -1,7 +1,7 @@
+from petsc4py import PETSc
+
 import ufl
 from dolfinx import fem
-from petsc4py import PETSc
-import dolfinx.fem.petsc
 
 
 class SNESProblem:
