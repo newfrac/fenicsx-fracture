@@ -10,6 +10,8 @@ import dolfinx.fem.petsc
 sys.path.append("./pycodes_coupledcriterion")
 from SNES_solver import *
 
+sys.path.append("../utils/")
+
 
 def fem_solver(mesh, facets, Mechanical_data, Geometrical_data, dl):
     # ............ Parameters in the problem
@@ -121,7 +123,7 @@ def fem_solver(mesh, facets, Mechanical_data, Geometrical_data, dl):
 
     # ............ Undamaged configuration (dl = 0)
     if dl == 0:
-        vector_dl, stress, cells, points_on_proc = [], [], [], []
+        vector_dl = []
 
         # .................. Tensile stress in the undamaged configuration
         V_s = dolfinx.fem.functionspace(mesh, ("Lagrange", 1, (2, 2)))
@@ -139,12 +141,14 @@ def fem_solver(mesh, facets, Mechanical_data, Geometrical_data, dl):
                 vector_dl.append(mesh.geometry.x[i, 0])
 
         vector_dl = np.sort(vector_dl)
+        from evaluate_at_points import evaluate_at_points
 
         # ................. Evaluation of stresses along the expected crack path
         points_eval = np.zeros((3, len(vector_dl)))
         points_eval[0] = vector_dl
-        tensile_sig = np.zeros((1, len(vector_dl)))
-        #        tensile_sig = sig_tensor.eval(points_on_proc, cells)[:, 3]
+
+        tensile_sig = evaluate_at_points(points_eval, sig_tensor)[:, 3]
+
         # ............Comment: nly in this particular case we omit the singularity at the other v-notch, and we reduce in one component the vectors         of the tensile stress
         return (
             energy,
