@@ -1,5 +1,5 @@
 format: jb-book
-root: index.md
+root: Index.md
 
 # include the README.md file in the build
 parts:
