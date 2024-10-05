@@ -1,3 +1,4 @@
+
 # Computational fracture mechanics examples with FEniCSx
 
 This webpage provides basic examples on computational methods to solve fracture mechanics problems using [DOLFINx](https://github.com/FEniCS/dolfinx/).
@@ -7,6 +8,15 @@ This work includes the contribution of the Early Stage Researchers (ESR) of the 
 The webpage is build using Jupyter-book, reusing the configuration of the [Dolfinx Tutorial](https://jsdokken.com/dolfinx-tutorial/).
 
 Comments and corrections to this webpage should be submitted to the issue tracker by going to the relevant page, then click the ![git](git.png)-symbol in the top right corner and "open issue".
+
+## Citation
+If you find the material of this repository useful, please cite it in your publications using the following reference:
+
+[![DOI](https://zenodo.org/badge/642212191.svg)](https://zenodo.org/doi/10.5281/zenodo.11518790)
+
+Chao Correas, A., Jack S. Hale, Jiménez Alfaro, S., Andrey Latyshev, & Maurini, C. (2024). newfrac/fenicsx-fracture: v1.0 (v1.0). Zenodo. https://doi.org/10.5281/zenodo.11518791
+
+
 
 ## Installation
 
