@@ -1,6 +1,6 @@
 {
   "name": "FEniCSx",
-  "dockerFile": "./docker/Dockerfile",
+  "dockerFile": "../docker/Dockerfile",
   "settings": {
     "terminal.integrated.shell.linux": "/bin/bash"
   },
