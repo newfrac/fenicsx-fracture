@@ -1,3 +1,4 @@
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/newfrac/fenicsx-fracture/HEAD)
 
 # Computational fracture mechanics examples with FEniCSx
 
@@ -12,10 +13,9 @@ Comments and corrections to this webpage should be submitted to the issue tracke
 ## Citation
 If you find the material of this repository useful, please cite it in your publications using the following reference:
 
-[![DOI](https://zenodo.org/badge/642212191.svg)](https://zenodo.org/doi/10.5281/zenodo.11518790)
-
 Chao Correas, A., Jack S. Hale, Jiménez Alfaro, S., Andrey Latyshev, & Maurini, C. (2024). newfrac/fenicsx-fracture: v1.0 (v1.0). Zenodo. https://doi.org/10.5281/zenodo.11518791
 
+[![DOI](https://zenodo.org/badge/642212191.svg)](https://zenodo.org/doi/10.5281/zenodo.11518790)
 
 
 ## Installation
@@ -59,9 +59,20 @@ conda activate fenicsx-fracture
 
 ### Binder
 
-Although we recommend to execute the notebook locally, you can also use the cloud-based binder service to execute the notebooks:
+Although we recommend executing the notebook locally, you can also use the cloud-based binder service to execute the notebooks:
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/newfrac/fenicsx-fracture/HEAD)
+
+### Google Colab
+
+Go to [Google Colab](https://colab.research.google.com) and create a new notebook. We will use the FEM on Colab project to install FEniCSx. Copy and paste into a new notebook cell:
+try:
+    import dolfinx
+except ImportError:
+    !wget "https://fem-on-colab.github.io/releases/fenicsx-install-real.sh" -O "/tmp/fenicsx-install.sh" && bash "/tmp/fenicsx-install.sh"
+import dolfinx
+
+and press Shift+Enter. You should see output from the install process and no errors.
 
 ## Acknowledgements
 

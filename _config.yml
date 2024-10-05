@@ -8,7 +8,7 @@ logo: images/logo.png
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
 execute:
-  execute_notebooks: force
+  execute_notebooks: cache
 
   # Set timeout for any example to 20 minutes
   timeout: 1800
@@ -19,7 +19,7 @@ execute:
 
 # Information about where the book exists on the web
 repository:
-  url: https://newfrac.github.io/fenicsx-fracture/ # Online location of your book
+  url: https://github.com/newfrac/fenicsx-fracture #https://newfrac.github.io/fenicsx-fracture/ # Online location of your book
   path_to_book: . # Optional path to your book, relative to the repository root
   branch: main # Which branch of the repository should be used when creating links (optional)
 
@@ -27,9 +27,17 @@ repository:
 bibtex_bibfiles:
   - references.bib
 
+#launch_buttons:
+#  notebook_interface: "jupyterlab"
+#  binderhub_url: "https://mybinder.org/v2/gh/newfrac/fenicsx-fracture/HEAD"
+#  colab_url: "https://colab.research.google.com"
+
 launch_buttons:
-  notebook_interface: "jupyterlab"
-  binderhub_url: "https://mybinder.org/v2/gh/newfrac/fenicsx-fracture/HEAD"
+  # notebook_interface: "jupyterlab"
+  binderhub_url: https://mybinder.org
+  jupyterhub_url: https://datahub.berkeley.edu
+  colab_url: https://colab.research.google.com
+  thebe: True
 
 parse:
   myst_enable_extensions:
@@ -49,16 +57,17 @@ sphinx:
   config:
     html_theme_options:
       repository_provider: "github" # or "github", "bitbucket",
-      repository_url: "https://github.com/newfrac/fenicsx-fracture"
+      repository_url: https://github.com/newfrac/fenicsx-fracture
     html_last_updated_fmt: "%b %d, %Y"
     suppress_warnings: ["mystnb.unknown_mime_type"]
 
 html:
+  favicon: images/avicon.png
   use_issues_button: true
   use_repository_button: true
   use_edit_page_button: true
   google_analytics_id: G-ND4QT7QGXW
-
+  home_page_in_navbar: true
   extra_footer: |
     <div>
         Funded by European Union’s Horizon 2020 research and innovation programme under a Marie Skłodowska-Curie Actions Grant Agreement n. 861061 – Project NEWFRAC
