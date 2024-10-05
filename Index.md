@@ -1,4 +1,6 @@
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/newfrac/fenicsx-fracture/HEAD)
+cd [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/newfrac/fenicsx-fracture/HEAD)
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/msolides-2024/fenicsx-fracture?quickstart=1)
 
 # Computational fracture mechanics examples with FEniCSx
 
@@ -66,11 +68,14 @@ Although we recommend executing the notebook locally, you can also use the cloud
 ### Google Colab
 
 Go to [Google Colab](https://colab.research.google.com) and create a new notebook. We will use the FEM on Colab project to install FEniCSx. Copy and paste into a new notebook cell:
+
+```python
 try:
     import dolfinx
 except ImportError:
     !wget "https://fem-on-colab.github.io/releases/fenicsx-install-real.sh" -O "/tmp/fenicsx-install.sh" && bash "/tmp/fenicsx-install.sh"
 import dolfinx
+```
 
 and press Shift+Enter. You should see output from the install process and no errors.
 
