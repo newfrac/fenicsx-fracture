@@ -8,7 +8,7 @@ The webpage is build using Jupyter-book, reusing the configuration of the [Dolfi
 
 Comments and corrections to this webpage should be submitted to the issue tracker by going to the relevant page, then click the ![git](git.png)-symbol in the top right corner and "open issue".
 
-### Installation
+## Installation
 
 To run this notebooks on your computer, we suggest using Docker or Conda, as exaplained below.
 
@@ -36,7 +36,7 @@ You can then access the jupyter lab notebook opening in your browser one of the 
 
 Steps 1-3 need to be done only the first time. After, you can then start the container with the command in step 4 directly.
 
-#### Conda
+### Conda
 
 To run the notebooks locally, we recommend to use the conda environment provided in this repository. To install conda, please follow the instructions [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/).
 
@@ -47,7 +47,7 @@ conda env create -f fenicsx-fracture.yml
 conda activate fenicsx-fracture
 ```
 
-#### Binder
+### Binder
 
 Although we recommend to execute the notebook locally, you can also use the cloud-based binder service to execute the notebooks:
 
