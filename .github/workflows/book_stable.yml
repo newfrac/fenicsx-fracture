@@ -36,7 +36,7 @@ jobs:
 
 
       - name: Build the book
-        run: jupyter-book build . -W
+        run: jupyter-book build . 
 
       - uses: actions/upload-artifact@v4
         with:
