@@ -1,4 +1,4 @@
-cd [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/newfrac/fenicsx-fracture/HEAD)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/newfrac/fenicsx-fracture/HEAD)
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/msolides-2024/fenicsx-fracture?quickstart=1)
 
