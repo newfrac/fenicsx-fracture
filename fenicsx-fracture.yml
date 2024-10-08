@@ -6,7 +6,7 @@ dependencies:
   - fenics-dolfinx==0.8.0
   - matplotlib
   - numba
-  - numpy
+  - numpy==1.26
   - sympy
   - scipy
   - pip
