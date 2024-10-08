@@ -44,6 +44,8 @@ docker build -t fenicsx-fracture -f docker/Dockerfile .
 docker run --rm -ti -v $(pwd):/root/shared -w /root/shared  --init -p 8888:8888 fenicsx-fracture
 ```
 
+*Note:* On Windows, you may need to replace `$(pwd)$` with `${PWD}` or `%cd%` in the line above, depending on the type of your terminal.
+
 You can then access the jupyter lab notebook opening in your browser one of the links starting with `http://...` indicated in the terminal.
 
 Steps 1-3 need to be done only the first time. After, you can then start the container with the command in step 4 directly.
