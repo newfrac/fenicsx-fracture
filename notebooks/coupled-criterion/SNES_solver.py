@@ -13,12 +13,14 @@ class SNES_problem:
 
     def F(self, snes, x, b):
         """Assemble F into the vector b"""
-        x.copy(self.u.vector)
+        x.copy(self.u.x.petsc_vec)
         with b.localForm() as b_local:  # zero residual vector
             b_local.set(0.0)
-        dolfinx.fem.apply_lifting(b, [self.a], [self.bcs], [x], -1.0)
+        dolfinx.fem.petsc.apply_lifting(
+            b, [self.a], [self.bcs], x0=[x], alpha=-1.0
+        )
         dolfinx.fem.petsc.assemble_vector(b, self.L)
-        dolfinx.fem.set_bc(b, self.bcs, x, -1.0)
+        dolfinx.fem.petsc.set_bc(b, self.bcs, x, -1.0)
 
     def J(self, snes, x, A, P):
         """Assemble the Jacobian matrix"""

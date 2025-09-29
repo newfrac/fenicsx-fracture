@@ -33,6 +33,8 @@ jobs:
       - name: Install additional deps
         run: |
           python3 -m pip install -r docker/requirements.txt
+          python3 -m pip install nbmake
+
 
       - name: Test notebooks 
         run: |

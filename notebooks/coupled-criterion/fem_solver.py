@@ -97,7 +97,7 @@ def fem_solver(mesh, facets, Mechanical_data, Geometrical_data, dl):
     snes.getKSP().setTolerances(1.0e-9)
 
     # ............ Execution of the solver // clear memory after
-    snes.solve(None, u.vector)
+    snes.solve(None, u.x.petsc_vec)
     snes.destroy, b.destroy(), J.destroy()
 
     # ........... Representation of displacements function
