@@ -22,15 +22,15 @@ class SNESProblem:
         x.ghostUpdate(
             addv=PETSc.InsertMode.INSERT, mode=PETSc.ScatterMode.FORWARD
         )
-        x.copy(self.u.vector)
-        self.u.vector.ghostUpdate(
+        x.copy(self.u.x.petsc_vec)
+        self.u.x.petsc_vec.ghostUpdate(
             addv=PETSc.InsertMode.INSERT, mode=PETSc.ScatterMode.FORWARD
         )
 
         with F.localForm() as f_local:
             f_local.set(0.0)
         fem.petsc.assemble_vector(F, self.L)
-        fem.petsc.apply_lifting(F, [self.a], bcs=[self.bcs], x0=[x], scale=-1.0)
+        fem.petsc.apply_lifting(F, [self.a], bcs=[self.bcs], x0=[x], alpha=-1.0)
         F.ghostUpdate(addv=PETSc.InsertMode.ADD, mode=PETSc.ScatterMode.REVERSE)
         fem.petsc.set_bc(F, self.bcs, x, -1.0)
 
