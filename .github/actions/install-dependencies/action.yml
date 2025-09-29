@@ -10,7 +10,7 @@ runs:
           python3 -m pip install -U pip
       # Install `h5py` master branch
       # https://github.com/hl5py/h5py/issues/2222
-      - name: Install h5py and pip requirements
-        shell: bash -el {0}
-        run: |
-          python3 -m pip install --no-binary=h5py git+https://github.com/h5py/h5py@master
+      # - name: Install h5py and pip requirements
+      #  shell: bash -el {0}
+      #  run: |
+      #    python3 -m pip install --no-binary=h5py git+https://github.com/h5py/h5py@master
