@@ -9,13 +9,13 @@ ENV HDF5_MPI="ON"
 ENV HDF5_DIR="/usr/local"
 ENV PYVISTA_JUPYTER_BACKEND="static"
 
-WORKDIR /tmp/
+WORKDIR /tmp/RUN 
 # Requirements for pyvista (gl1 and render1) and jupyterlab (nodejs and curl)
-RUN apt-get update && apt-get install -y libgl1-mesa-glx libxrender1 xvfb curl
-RUN curl -sL https://deb.nodesource.com/setup_18.x -o nodesource_setup.sh && \
-    bash nodesource_setup.sh && \
-    apt install nodejs
+RUN apt-get update && apt-get install -y  libgl1-mesa-dev mesa-utils  libxrender1 xvfb curl 
 
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 # Upgrade setuptools and pip
 RUN python3 -m pip install -U setuptools pip pkgconfig
 
@@ -26,12 +26,14 @@ RUN python3 -m pip install -U setuptools pip pkgconfig
 #     ninja && \
 #     python3 setup.py bdist_wheela
 
-RUN echo ${TARGETPLATFORM}
-RUN if [ "$TARGETPLATFORM" = "linux/arm64" ]; then python3 -m pip install "https://github.com/finsberg/vtk-aarch64/releases/download/vtk-9.2.6-cp310/vtk-9.2.6.dev0-cp310-cp310-linux_aarch64.whl"; fi
-RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then python3 -m pip install vtk; fi
 
-ADD pyproject.toml /tmp/pyproject.toml
-RUN python3 -m pip install --no-cache-dir --no-binary=h5py -v .
+RUN python3 -m pip install vtk
+RUN python3 -m pip install --no-cache-dir --no-binary=h5py h5py 
 RUN python3 -m pip cache purge
-RUN jupyter lab build
+
+ENV PYVISTA_OFF_SCREEN="false"
+ENV PYVISTA_JUPYTER_BACKEND="trame"
+ENV LIBGL_ALWAYS_SOFTWARE=1
+
+# RUN jupyter lab build
 ENTRYPOINT ["jupyter", "lab", "--ip", "0.0.0.0", "--no-browser", "--allow-root"]
