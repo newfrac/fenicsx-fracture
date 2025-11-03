@@ -24,6 +24,12 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v5
 
+        # 2. Set up Python
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+
       - name: Install common packages
         uses: ./.github/actions/install-dependencies
         
@@ -48,13 +54,11 @@ jobs:
         run: |
           sphinx-build --version
           jupyter-book --version
-          python -c "import sphinx; print(sphinx.__version__)"
-          python -c "from importlib.metadata import version; print(version("jupyter-book"))"
 
       - name: Build Jupyter Book
         run: |
           rm -rf _build
-          jupyter-book build . --path-output _build/html
+          jupyter-book build index.md --path-output _build/html
 
       - uses: actions/upload-artifact@v5
         if: always()
