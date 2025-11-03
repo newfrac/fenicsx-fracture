@@ -62,7 +62,7 @@ sphinx:
     suppress_warnings: ["mystnb.unknown_mime_type"]
 
 html:
-  favicon: images/avicon.png
+  favicon: images/favicon.png
   use_issues_button: true
   use_repository_button: true
   use_edit_page_button: true
