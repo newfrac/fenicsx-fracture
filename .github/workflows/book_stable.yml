@@ -44,16 +44,10 @@ jobs:
       #    # python3 -m pip install -U pip setuptools pkgconfig poetry-core
       #    # python3 -m pip install --no-binary=h5py .[netgen]
       
-      - name: Debug repo structure
-        run: |
-          pwd
-          ls -la
-          file _config.yml
-          ls -la _config.yml
-      - name: Check versions
-        run: |
-          sphinx-build --version
-          jupyter-book --version
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'  # or LTS version
 
       - name: Build Jupyter Book
         run: |
