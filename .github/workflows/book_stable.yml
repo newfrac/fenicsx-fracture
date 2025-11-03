@@ -1,8 +1,7 @@
-name: Test stable build of book
+name: Build Jupyter Book
 
 on:
   workflow_dispatch:
-  workflow_call:
   pull_request:
     branches: ["main"]
 
@@ -11,91 +10,63 @@ env:
   HDF5_DIR: "/usr/local/"
   DISPLAY: ":99.0"
   DEB_PYTHON_INSTALL_LAYOUT: deb_system
+  PYVISTA_TRAME_SERVER_PROXY_PREFIX: '/proxy/'
+  PYVISTA_TRAME_SERVER_PROXY_ENABLED: "True"
+  PYVISTA_OFF_SCREEN: false
+  PYVISTA_JUPYTER_BACKEND: "html"
 
 jobs:
   build-book:
     runs-on: ubuntu-latest
-    container: ghcr.io/fenics/dolfinx/lab:v0.9.0
-
-    env:
-      PYVISTA_TRAME_SERVER_PROXY_PREFIX: '/proxy/'
-      PYVISTA_TRAME_SERVER_PROXY_ENABLED: "True"
-      PYVISTA_OFF_SCREEN: false
-      PYVISTA_JUPYTER_BACKEND: "html"
 
     steps:
-      # 1. Checkout repository
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      # 2. Cache pip dependencies
-      - name: Cache pip dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('docker/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-
-      # 3. Install common system dependencies (custom action)
-      - name: Install common packages
-        uses: ./.github/actions/install-dependencies
-
-      # 4. Install Python dependencies (including jupyter-book upgrade)
-      - name: Install Python dependencies
+      - name: Install dependencies
         run: |
-          python3 -m pip install --upgrade pip
-          python3 -m pip install -r docker/requirements.txt
-          python3 -m pip install --upgrade "jupyter-book>=0.13.2"
-        working-directory: ${{ github.workspace }}
+          python -m pip install --upgrade pip
+          pip install jupyter-book==0.13.1
+          pip install -r docker/requirements.txt
 
-      # 5. Setup Node.js
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
-      # 6. Verify environment
-      - name: Verify environment setup
-        run: |
-          echo "Python version:"
-          python3 --version
-          echo "Installed pip packages:"
-          pip list | grep jupyter-book || echo "⚠️ jupyter-book not found"
-          echo "Node.js version:"
-          node -v
-          echo "npm version:"
-          npm -v
-        working-directory: ${{ github.workspace }}
-
-      # 7. Verify Jupyter Book structure
-      - name: Verify Jupyter Book structure
+      - name: Debug directory structure
         run: |
           echo "Current working directory: $(pwd)"
           ls -la
+          echo "Notebooks folders:"
+          find notebooks -type d
+          find notebooks -type l
+          echo "Root files:"
+          ls -la
+
+      - name: Check Jupyter Book config
+        run: |
           if [ ! -f "_config.yml" ]; then
-            echo "❌ _config.yml not found in $(pwd)"
+            echo "❌ _config.yml not found"
             exit 1
           fi
           if [ ! -f "_toc.yml" ]; then
-            echo "❌ _toc.yml not found in $(pwd)"
+            echo "❌ _toc.yml not found"
             exit 1
           fi
-          echo "✅ Found Jupyter Book configuration files."
-        working-directory: ${{ github.workspace }}
+          echo "✅ Found _config.yml and _toc.yml"
 
-      # 8. Build the Jupyter Book (strict mode)
-      - name: Build the Jupyter Book
-        run: |
-          echo "Building Jupyter Book in $(pwd)"
-          jupyter-book build . 
-        working-directory: ${{ github.workspace }}
+      - name: Clean previous builds
+        run: jupyter-book clean .
 
-      # 9. Upload built HTML as artifact
-      - name: Upload built webpage
+      - name: Build Jupyter Book in debug mode
+        run: jupyter-book build . --debug
+
+      - name: Upload built HTML
         uses: actions/upload-artifact@v4
         with:
-          name: webpage
+          name: book-html
           path: _build/html
           retention-days: 2
-          if-no-files-found: error
+
+      # Optional: deploy to GitHub Pages
+      # - name: Deploy to GitHub Pages
+      #   uses: peaceiris/actions-gh-pages@v7
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     publish_dir: ./_build/html
