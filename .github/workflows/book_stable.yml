@@ -31,6 +31,7 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip
           pip3 install -r docker/requirements.txt
+          pip install "jupyter-book>=2.0.0" "sphinx>=8.0.0"
 
       #- name: Install book deps
       #  run: |
