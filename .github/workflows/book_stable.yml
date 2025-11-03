@@ -27,17 +27,34 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install jupyter-book==0.13.1
-          pip install -r docker/requirements.txt
+          # Use the repository root requirements.txt (fall back to docker/requirements.txt if present)
+          if [ -f "requirements.txt" ]; then
+            echo "Installing from requirements.txt"
+            pip install -r requirements.txt
+          elif [ -f "docker/requirements.txt" ]; then
+            echo "Installing from docker/requirements.txt"
+            pip install -r docker/requirements.txt
+          else
+            echo "❌ No requirements file found at requirements.txt or docker/requirements.txt"
+            ls -la
+            exit 1
+          fi
 
       - name: Debug directory structure
         run: |
           echo "Current working directory: $(pwd)"
-          ls -la
-          echo "Notebooks folders:"
-          find notebooks -type d
-          find notebooks -type l
           echo "Root files:"
           ls -la
+          echo "Docker directory contents:"
+          if [ -d "docker" ]; then
+            ls -la docker || true
+            find docker -maxdepth 2 -type f -print || true
+          else
+            echo "docker directory not present"
+          fi
+          echo "Notebooks folders:"
+          find notebooks -type d || true
+          find notebooks -type l || true
 
       - name: Check Jupyter Book config
         run: |
@@ -63,10 +80,3 @@ jobs:
           name: book-html
           path: _build/html
           retention-days: 2
-
-      # Optional: deploy to GitHub Pages
-      # - name: Deploy to GitHub Pages
-      #   uses: peaceiris/actions-gh-pages@v7
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     publish_dir: ./_build/html
