@@ -29,10 +29,10 @@ jobs:
         
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install -r docker/requirements.txt
-          pip install "sphinx>=6.0.0" "sphinxcontrib-applehelp>=1.0.4"
-          pip install jupyter-book==0.13.1
+          python3 -m pip install --upgrade pip
+          pip3 install -r docker/requirements.txt
+          pip3 install "sphinx>=6.0.0" "sphinxcontrib-applehelp>=1.0.4"
+          pip3 install jupyter-book==0.13.1
 
       #- name: Install book deps
       #  run: |
