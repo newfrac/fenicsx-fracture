@@ -43,7 +43,13 @@ jobs:
           ls -la
           file _config.yml
           ls -la _config.yml
-             
+      - name: Check versions
+        run: |
+          sphinx-build --version
+          jupyter-book --version
+          python -c "import sphinx; print(sphinx.__version__)"
+          python -c "import jupyter_book; print(jupyter_book.__version__)"
+
       - name: Build Jupyter Book
         run: |
           rm -rf _build
