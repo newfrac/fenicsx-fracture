@@ -58,7 +58,7 @@ jobs:
       - name: Build Jupyter Book
         run: |
           rm -rf _build
-          jupyter-book build index.md 
+          jupyter-book build .
 
       - uses: actions/upload-artifact@v5
         if: always()
