@@ -27,10 +27,10 @@ env:
 
 jobs:
   run-tests:
-    uses: .github/workflows/test_stable.yml
+    uses: ./.github/workflows/test_stable.yml
     
   build-book:
-    uses: .github/workflows/book_stable.yml
+    uses: ./.github/workflows/book_stable.yml
 
   deploy:
     runs-on: ubuntu-22.04
