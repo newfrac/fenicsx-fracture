@@ -45,7 +45,9 @@ jobs:
           ls -la _config.yml
              
       - name: Build Jupyter Book
-        run: jupyter-book build .
+        run: |
+          rm -rf _build
+          jupyter-book build .
 
 
       - uses: actions/upload-artifact@v5
