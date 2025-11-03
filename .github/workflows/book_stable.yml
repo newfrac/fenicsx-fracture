@@ -29,10 +29,6 @@ jobs:
       - name: Install common packages
         uses: ./.github/actions/install-dependencies
 
-      - name: Install book deps
-        run: |
-          python3 -m pip install -r docker/requirements.txt
-
       - name: Install Node.js
         run: |
           apt-get update
