@@ -8,14 +8,9 @@ on:
 env:
   HDF5_MPI: "ON"
   HDF5_DIR: "/usr/local/"
-  DEB_PYTHON_INSTALL_LAYOUT: deb_system
-  LIBGL_ALWAYS_SOFTWARE: 1
-
-env:
-  HDF5_MPI: "ON"
-  HDF5_DIR: "/usr/local/"
   DISPLAY: ":99.0"
   DEB_PYTHON_INSTALL_LAYOUT: deb_system
+  LIBGL_ALWAYS_SOFTWARE: 1
   PYVISTA_TRAME_SERVER_PROXY_PREFIX: '/proxy/'
   PYVISTA_TRAME_SERVER_PROXY_ENABLED: "True"
   PYVISTA_OFF_SCREEN: false
@@ -38,10 +33,10 @@ jobs:
           pip install -r docker/requirements.txt
           pip install jupyter-book==0.12
           
-      - name: Install book deps
-        run: |
-          python3 -m pip install --break-system-packages -U pip setuptools pkgconfig poetry-core
-          # python3 -m pip install --no-binary=h5py .[netgen]
+      #- name: Install book deps
+      #  run: |
+      #    # python3 -m pip install -U pip setuptools pkgconfig poetry-core
+      #    # python3 -m pip install --no-binary=h5py .[netgen]
      
       - name: Build Jupyter Book
         run: jupyter-book build .
