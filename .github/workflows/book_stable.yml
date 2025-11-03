@@ -36,12 +36,13 @@ jobs:
       #  run: |
       #    # python3 -m pip install -U pip setuptools pkgconfig poetry-core
       #    # python3 -m pip install --no-binary=h5py .[netgen]
-     - name: Debug repo structure
+      
+      - name: Debug repo structure
         run: |
-             pwd
-             ls -la
-             file _config.yml
-             ls -la _config.yml
+          pwd
+          ls -la
+          file _config.yml
+          ls -la _config.yml
              
       - name: Build Jupyter Book
         run: jupyter-book build .
