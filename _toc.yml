@@ -1,5 +1,5 @@
 format: jb-book
-root: index
+root: index.md
 
 parts:
   - caption: Elasticity
