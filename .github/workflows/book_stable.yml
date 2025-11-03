@@ -48,7 +48,7 @@ jobs:
           sphinx-build --version
           jupyter-book --version
           python -c "import sphinx; print(sphinx.__version__)"
-          python -c "import jupyter_book; print(jupyter_book.__version__)"
+          python -c "from importlib.metadata import version; print(version("jupyter-book"))"
 
       - name: Build Jupyter Book
         run: |
