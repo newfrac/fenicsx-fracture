@@ -1,34 +1,31 @@
 format: jb-book
-root: index.md
+root: index
 
-# include the README.md file in the build
 parts:
   - caption: Elasticity
     chapters:
-      - file: notebooks/linear-elasticity/00-Mesh.ipynb
-      - file: notebooks/linear-elasticity/01-LinearElasticity.ipynb
+      - file: notebooks/linear-elasticity/00-Mesh
+      - file: notebooks/linear-elasticity/01-LinearElasticity
   - caption: Linear elastic fracture mechanics
     chapters:
-      - file: notebooks/linear-elasticity/02-LEFM.ipynb
+      - file: notebooks/linear-elasticity/02-LEFM
   - caption: Elastodynamics
     chapters:
-      - file: notebooks/elastodynamics/01-Elastodynamics-Theory.ipynb
-      - file: notebooks/elastodynamics/02-Elastodynamics-Implementation.ipynb
-      - file: notebooks/elastodynamics/03-Elastodynamics_Explicit-Theory.ipynb
-      - file: notebooks/elastodynamics/04-Elastodynamics_Explicit-Implementation.ipynb
+      - file: notebooks/elastodynamics/01-Elastodynamics-Theory
+      - file: notebooks/elastodynamics/02-Elastodynamics-Implementation
+      - file: notebooks/elastodynamics/03-Elastodynamics_Explicit-Theory
+      - file: notebooks/elastodynamics/04-Elastodynamics_Explicit-Implementation
   - caption: Phase-field fracture models
     chapters:
-      - file: notebooks/phase-field/phase-field.ipynb
+      - file: notebooks/phase-field/phase-field
   - caption: Dynamic Phase field fracture models
     chapters:
-      - file: notebooks/phase-field-dynamics/01-Elastodynamics-damage-Theory.ipynb
-      - file: notebooks/phase-field-dynamics/02-Elastodynamics-damage-Implementation.ipynb
+      - file: notebooks/phase-field-dynamics/01-Elastodynamics-damage-Theory
+      - file: notebooks/phase-field-dynamics/02-Elastodynamics-damage-Implementation
   - caption: Elasto-plasticity
     chapters:
-      - file: notebooks/plasticity/plasticity.ipynb
+      - file: notebooks/plasticity/plasticity
   - caption: Coupled Criterion
     chapters:
-      - file: notebooks/coupled-criterion/Coupled_Criterion.ipynb
-  - caption: Utility functions
-    chapters:
-      - file: notebooks/utils/README.md
+      - file: notebooks/coupled-criterion/Coupled_Criterion
+# Removed the problematic README.md file
