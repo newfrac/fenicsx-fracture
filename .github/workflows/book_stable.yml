@@ -16,7 +16,7 @@ jobs:
   build-book:
     runs-on: ubuntu-latest
     container: ghcr.io/fenics/dolfinx/lab:v0.9.0
-   
+
     env:
       PYVISTA_TRAME_SERVER_PROXY_PREFIX: '/proxy/'
       PYVISTA_TRAME_SERVER_PROXY_ENABLED: "True"
@@ -24,25 +24,76 @@ jobs:
       PYVISTA_JUPYTER_BACKEND: "html"
 
     steps:
-      - uses: actions/checkout@v4
-  
+      # 1. Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Cache pip dependencies
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('docker/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      # 3. Install common system dependencies (custom composite action)
       - name: Install common packages
         uses: ./.github/actions/install-dependencies
-      
-      - name: install dependences via pip
-        run: python3 -m pip install -r docker/requirements.txt
-      
-      - name: Install Node.js
+
+      # 4. Install Python dependencies (and ensure Jupyter Book is installed)
+      - name: Install Python dependencies
         run: |
-          apt-get update
-          apt-get install -y nodejs npm
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r docker/requirements.txt
+          python3 -m pip install jupyter-book
+        working-directory: ${{ github.workspace }}
+
+      # 5. Install Node.js for JS-based extensions
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      # 6. Verify installations
+      - name: Verify environment setup
+        run: |
+          echo "Python version:"
+          python3 --version
+          echo "Installed pip packages:"
+          pip list | grep jupyter-book || echo "⚠️ jupyter-book not found"
+          echo "Node.js version:"
           node -v
+          echo "npm version:"
           npm -v
+        working-directory: ${{ github.workspace }}
 
-      - name: Build the book
-        run: jupyter-book build . 
+      # 7. Verify Jupyter Book structure before build
+      - name: Verify Jupyter Book structure
+        run: |
+          echo "Current working directory: $(pwd)"
+          ls -la
+          if [ ! -f "_config.yml" ]; then
+            echo "❌ _config.yml not found in $(pwd)"
+            exit 1
+          fi
+          if [ ! -f "_toc.yml" ]; then
+            echo "❌ _toc.yml not found in $(pwd)"
+            exit 1
+          fi
+          echo "✅ Found Jupyter Book configuration files."
+        working-directory: ${{ github.workspace }}
 
-      - uses: actions/upload-artifact@v4
+      # 8. Build the Jupyter Book (strict mode)
+      - name: Build the Jupyter Book
+        run: |
+          echo "Building Jupyter Book in $(pwd)"
+          jupyter-book build . --all --warning-is-error
+        working-directory: ${{ github.workspace }}
+
+      # 9. Upload built HTML as artifact
+      - name: Upload built webpage
+        uses: actions/upload-artifact@v4
         with:
           name: webpage
           path: _build/html
