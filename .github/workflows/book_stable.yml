@@ -32,7 +32,7 @@ jobs:
       - name: Install common packages
         uses: ./.github/actions/install-dependencies
         
-        - name: Install dependencies
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r docker/requirements.txt
