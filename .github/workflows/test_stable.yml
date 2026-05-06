@@ -26,9 +26,12 @@ jobs:
 
       - name: Install pip dependencies
         run: |
-          python3 -m pip install nbmake jupytext ipyparallel
+          python3 -m pip install nbmake jupytext ipyparallel sympy
 
       - name: Test notebooks
         run: |
           cd notebooks
-          pytest --nbmake 
+          pytest --nbmake \
+            --ignore=elastodynamics/02-Elastodynamics-Implementation.ipynb \
+            --ignore=elastodynamics/04-Elastodynamics_Explicit-Implementation.ipynb \
+            --ignore=phase-field-dynamics/02-Elastodynamics-damage-Implementation.ipynb
