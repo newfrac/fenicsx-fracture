@@ -29,6 +29,10 @@ jobs:
       - name: Install common packages
         uses: ./.github/actions/install-dependencies
 
+      - name: Install Node.js
+        run: |
+          apt-get update && apt-get install -y nodejs npm
+
       - name: Install book deps
         run: |
           python3 -m pip install --break-system-packages -U pip setuptools pkgconfig poetry-core

@@ -23,6 +23,25 @@ PYTHON_CMD="python3"
 echo "Using Python: $($PYTHON_CMD --version)"
 echo ""
 
+# Check for Node.js (required for Jupyter Book)
+echo -e "${YELLOW}Checking Node.js installation...${NC}"
+if ! command -v node &> /dev/null; then
+    echo -e "${YELLOW}Node.js not found. Attempting to install via Homebrew...${NC}"
+    if command -v brew &> /dev/null; then
+        echo "Installing Node.js with Homebrew..."
+        brew install node 2>&1 | tail -5
+    else
+        echo -e "${RED}Error: Node.js is required for Jupyter Book${NC}"
+        echo "Please install Node.js from https://nodejs.org/ or via:"
+        echo "  brew install node  (if you have Homebrew)"
+        exit 1
+    fi
+fi
+
+echo "Node.js version: $(node --version)"
+echo ""
+echo ""
+
 # Create virtual environment
 echo -e "${YELLOW}Creating virtual environment...${NC}"
 $PYTHON_CMD -m venv .venv-test

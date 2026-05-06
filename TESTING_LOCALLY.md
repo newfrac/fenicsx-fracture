@@ -29,12 +29,16 @@ For quick iteration without Docker:
 ```
 
 This script will:
-1. Create a Python virtual environment (`.venv-test`)
-2. Install all dependencies from `pyproject.toml`
-3. Build the book
-4. Create the `.nojekyll` file for GitHub Pages
+1. Check for Python 3.11+ and Node.js (required for Jupyter Book)
+2. Install Node.js via Homebrew if needed
+3. Create a Python virtual environment (`.venv-test`)
+4. Install all dependencies from `pyproject.toml`
+5. Build the book
+6. Create the `.nojekyll` file for GitHub Pages
 
-**Requirements:** Python 3.11+ installed locally
+**Requirements:** 
+- Python 3.11+ installed locally
+- Node.js (script will try to install via Homebrew if missing)
 
 ## Viewing the Built Website
 
@@ -47,6 +51,17 @@ python3 -m http.server --directory _build/html 8000
 Then open: **http://localhost:8000**
 
 ## Troubleshooting
+
+### Node.js not found
+Jupyter Book 2.x requires Node.js. The local script will try to install it automatically if missing.
+
+If you see "Node.js is required" error:
+```bash
+# On macOS with Homebrew
+brew install node
+
+# Or install from https://nodejs.org/
+```
 
 ### Build fails with missing dependencies
 - **Docker option:** Make sure Docker is running: `docker ps`

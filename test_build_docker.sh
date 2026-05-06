@@ -43,6 +43,9 @@ docker run --rm \
     bash -c '
     set -e
     
+    echo "=== Installing Node.js ==="
+    apt-get update && apt-get install -y nodejs npm
+    
     echo "=== Installing pip dependencies ==="
     python3 -m pip install --break-system-packages -U pip setuptools pkgconfig poetry-core
     
