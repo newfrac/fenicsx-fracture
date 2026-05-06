@@ -54,6 +54,9 @@ jobs:
           rm -rf _build
           jupyter-book build .
 
+      - name: Create .nojekyll file
+        run: touch ./_build/html/.nojekyll
+
       - uses: actions/upload-artifact@v5
         if: always()
         with:
