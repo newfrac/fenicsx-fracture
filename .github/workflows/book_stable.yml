@@ -20,7 +20,7 @@ jobs:
     container: ghcr.io/fenics/dolfinx/lab:stable
 
     env:
-      PYVISTA_OFF_SCREEN: false
+      PYVISTA_OFF_SCREEN: true
       PYVISTA_JUPYTER_BACKEND: html
 
     steps:
@@ -33,10 +33,9 @@ jobs:
         run: |
           apt-get update && apt-get install -y nodejs npm
 
-      - name: Install dependencies with conda
+      - name: Install pip dependencies
         run: |
-          conda install -c conda-forge -y fenics-dolfinx jupyter-book meshio h5py seaborn pandas tqdm pyvista sympy
-          conda install -c conda-forge -y jupytext nbmake ipyparallel
+          python3 -m pip install jupyter-book meshio seaborn pandas tqdm pyvista sympy jupytext nbmake ipyparallel
 
       - name: Build the book
         run: jupyter-book build .
