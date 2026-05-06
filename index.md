@@ -8,7 +8,7 @@ This webpage provides basic examples on computational methods to solve fracture 
 
 This work includes the contribution of the Early Stage Researchers (ESR) of the ITN project [Newfrac](https://www.newfrac.eu) funded by the European Commission under a Marie Skłodowska-Curie Actions Grant Agreement n. 861061.
 
-The webpage is build using Jupyter-book, reusing the configuration of the [Dolfinx Tutorial](https://jsdokken.com/dolfinx-tutorial/).
+The webpage is built using Jupyter-book, reusing the configuration of the [Dolfinx Tutorial](https://jsdokken.com/dolfinx-tutorial/).
 
 Comments and corrections to this webpage should be submitted to the issue tracker by going to the relevant page, then click the ![git](git.png)-symbol in the top right corner and "open issue".
 
@@ -22,7 +22,7 @@ Chao Correas, A., Jack S. Hale, Jiménez Alfaro, S., Andrey Latyshev, & Maurini,
 
 ## Installation
 
-To run this notebooks on your computer, we suggest using Docker or Conda, as exaplained below.
+To run this notebooks on your computer, we suggest using Docker or Conda, as explained below.
 
 ### Docker
 
@@ -44,11 +44,11 @@ docker build -t fenicsx-fracture -f docker/Dockerfile .
 docker run --rm -ti -v $(pwd):/root/shared -w /root/shared  --init -p 8888:8888 fenicsx-fracture
 ```
 
-*Note:* On Windows, you may need to replace `$(pwd)$` with `${PWD}` or `%cd%` in the line above, depending on the type of your terminal.
+*Note:* On Windows, you may need to replace `$(pwd)` with `${PWD}` or `%cd%` in the line above, depending on the type of your terminal.
 
 You can then access the jupyter lab notebook opening in your browser one of the links starting with `http://...` indicated in the terminal.
 
-Steps 1-3 need to be done only the first time. After, you can then start the container with the command in step 4 directly.
+Steps 1-3 need to be done only the first time. Afterwards, you can then start the container with the command in step 4 directly.
 
 ### Conda
 
