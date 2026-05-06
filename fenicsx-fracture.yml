@@ -5,9 +5,8 @@ channels:
 dependencies:
   - python=3.11
   - nodejs
-  - fenics-dolfinx
+  - fenics-dolfinx=0.10.0
   - jupyter-book
-  - jupyter-book-ghp
   - matplotlib
   - numba
   - numpy
