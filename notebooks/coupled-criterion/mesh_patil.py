@@ -1,6 +1,6 @@
 import gmsh
 import math
-from dolfinx.io.gmshio import model_to_mesh
+from dolfinx.io.gmsh import model_to_mesh
 from mpi4py import MPI
 
 def generate_mesh(Geometrical_data, Mesh_data):
@@ -46,7 +46,7 @@ def generate_mesh(Geometrical_data, Mesh_data):
     gmsh.model.mesh.generate(gdim)
 
     #............... Mesh importation in the dolfinx format
-    mesh, _, facets = model_to_mesh(gmsh.model,mesh_comm,model_rank,gdim=gdim)
+    mesh, _, facets, *__ = model_to_mesh(gmsh.model,mesh_comm,model_rank,gdim=gdim)
 
     gmsh.finalize()
     

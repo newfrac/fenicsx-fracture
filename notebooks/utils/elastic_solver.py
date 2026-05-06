@@ -106,6 +106,7 @@ def solve_elasticity(
     problem = fem.petsc.LinearProblem(
         a(u, v),
         L(v),
+        petsc_options_prefix="solver_",
         bcs=bcs,
         petsc_options={"ksp_type": "preonly", "pc_type": "lu"},
     )

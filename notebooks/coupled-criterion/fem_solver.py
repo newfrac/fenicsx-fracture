@@ -131,7 +131,7 @@ def fem_solver(mesh, facets, Mechanical_data, Geometrical_data, dl):
         sig_tensor = dolfinx.fem.Function(V_s, name="Stress tensor")
 
         sig_expres = dolfinx.fem.Expression(
-            sigma(u), V_s.element.interpolation_points()
+            sigma(u), V_s.element.interpolation_points
         )
         sig_tensor.interpolate(sig_expres)
 

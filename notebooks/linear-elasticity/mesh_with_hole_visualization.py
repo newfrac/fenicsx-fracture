@@ -1,5 +1,5 @@
 import gmsh
-from dolfinx.io import gmshio
+from dolfinx.io import gmsh as gmshio
 
 
 def create_rectangle_mesh_gmsh(
@@ -114,7 +114,7 @@ def create_rectangle_mesh_gmsh(
     gmsh.model.mesh.generate(2)
 
     # Convert to DOLFINx mesh
-    domain, cell_tags, facet_tags = gmshio.model_to_mesh(
+    domain, cell_tags, facet_tags, *_ = gmshio.model_to_mesh(
         gmsh.model, MPI.COMM_WORLD, 0, gdim=2
     )
 

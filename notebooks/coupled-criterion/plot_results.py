@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 def init_pyvista():
     import pyvista
 
-    pyvista.start_xvfb(wait=0.5)
+    pass
 
 
 # ................. Representation of the mesh

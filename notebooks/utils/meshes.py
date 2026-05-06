@@ -1,7 +1,7 @@
 import gmsh
 import numpy as np
 from mpi4py import MPI
-from dolfinx.io import gmshio, XDMFFile
+from dolfinx.io import gmsh as gmshio, XDMFFile
 import dolfinx.plot
 
 
@@ -77,7 +77,7 @@ def generate_mesh_with_crack(
             model.addPhysicalGroup(1, [value], tag=value)
             model.setPhysicalName(1, value, key)
 
-        msh, cell_tags, facet_tags = gmshio.model_to_mesh(
+        msh, cell_tags, facet_tags, *_ = gmshio.model_to_mesh(
             model, mesh_comm, model_rank, gdim=gdim
         )
         gmsh.finalize()

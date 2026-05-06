@@ -54,7 +54,8 @@ html:
   use_issues_button: true
   use_repository_button: true
   use_edit_page_button: true
-  google_analytics_id: G-ND4QT7QGXW
+  analytics:
+    google_analytics_id: G-ND4QT7QGXW
   home_page_in_navbar: true
   extra_footer: |
     <div>
