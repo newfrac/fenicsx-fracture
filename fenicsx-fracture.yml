@@ -3,17 +3,19 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - fenics-dolfinx==0.9.0
+  - python=3.11
+  - nodejs
+  - fenics-dolfinx
+  - jupyter-book
+  - jupyter-book-ghp
   - matplotlib
   - numba
   - numpy
   - sympy
   - scipy
-  - pip
   - gmsh
   - python-gmsh
   - pythreejs
-  - jupyter-book
   - autopep8
   - black
   - flake8
@@ -21,9 +23,14 @@ dependencies:
   - pyaml
   - pandas
   - jupyterlab
-  - pip
   - pyvista
   - ipygany
   - jupytext
   - ipyparallel
-  
+  - h5py
+  - seaborn
+  - tqdm
+  - meshio
+  - nbmake
+  - pip
+

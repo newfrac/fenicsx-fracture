@@ -13,12 +13,14 @@ dependencies = [
     "pandas",
     "tqdm",
     "pyvista[all]>=0.43.0",
-    "fenics-dolfinx==0.8.0",
     "sympy"   
 ]
 
 [project.optional-dependencies]
 dev = ["pdbpp", "ipython", "jupytext", "ruff", "nbmake", "ipyparallel"]
+
+# FEniCS/DOLFINx should be installed via conda:
+# conda install -c conda-forge fenics-dolfinx
 
 [tool.setuptools]
 packages = []

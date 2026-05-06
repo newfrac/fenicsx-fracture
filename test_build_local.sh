@@ -1,9 +1,9 @@
 #!/bin/bash
-# Local test script to replicate GitHub Actions build
+# Local test script using conda to install dependencies
 
 set -e
 
-echo "=== Starting Jupyter Book Build Test ==="
+echo "=== Starting Jupyter Book Build Test with Conda ==="
 echo ""
 
 # Colors for output
@@ -12,55 +12,37 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-# Check if Python 3 is available
-echo -e "${YELLOW}Checking Python installation...${NC}"
-if ! command -v python3 &> /dev/null; then
-    echo -e "${RED}Error: Python 3 not found${NC}"
+# Check for conda
+echo -e "${YELLOW}Checking conda installation...${NC}"
+if ! command -v conda &> /dev/null; then
+    echo -e "${RED}Error: conda is not installed or not in PATH${NC}"
+    echo "Please install Anaconda or Miniconda from https://conda.io/projects/conda/en/latest/user-guide/install/"
     exit 1
 fi
 
-PYTHON_CMD="python3"
-echo "Using Python: $($PYTHON_CMD --version)"
+echo "Conda version: $(conda --version)"
 echo ""
 
-# Check for Node.js (required for Jupyter Book)
+# Check for Node.js
 echo -e "${YELLOW}Checking Node.js installation...${NC}"
 if ! command -v node &> /dev/null; then
-    echo -e "${YELLOW}Node.js not found. Attempting to install via Homebrew...${NC}"
-    if command -v brew &> /dev/null; then
-        echo "Installing Node.js with Homebrew..."
-        brew install node 2>&1 | tail -5
-    else
-        echo -e "${RED}Error: Node.js is required for Jupyter Book${NC}"
-        echo "Please install Node.js from https://nodejs.org/ or via:"
-        echo "  brew install node  (if you have Homebrew)"
-        exit 1
-    fi
+    echo -e "${YELLOW}Node.js not found. Will install via conda.${NC}"
+else
+    echo "Node.js version: $(node --version)"
 fi
-
-echo "Node.js version: $(node --version)"
-echo ""
 echo ""
 
-# Create virtual environment
-echo -e "${YELLOW}Creating virtual environment...${NC}"
-$PYTHON_CMD -m venv .venv-test
-source .venv-test/bin/activate
+# Create conda environment
+echo -e "${YELLOW}Creating/updating conda environment for fenicsx-fracture...${NC}"
+conda env create -f fenicsx-fracture.yml --force 2>&1 | grep -E "(Creating|Updating|Solving|Preparing|Downloading|Extracting|Package|completed|ERROR)" || true
 
-# Upgrade pip and install build tools
-echo -e "${YELLOW}Upgrading pip and installing build tools...${NC}"
-pip install --upgrade pip setuptools pkgconfig poetry-core Cython wheel
-
-# Install jupyter-book first (simpler dependencies)
-echo -e "${YELLOW}Installing jupyter-book...${NC}"
-pip install jupyter-book
-
-# Install project dependencies
-echo -e "${YELLOW}Installing project dependencies from pyproject.toml...${NC}"
-pip install --no-build-isolation --no-binary=h5py . 2>/dev/null || pip install . 2>/dev/null || echo "Warning: some dependencies may not have installed"
+# Activate environment
+echo ""
+echo -e "${YELLOW}Activating environment...${NC}"
+source activate fenicsx-fracture
 
 echo ""
-echo -e "${YELLOW}Dependencies installed. Building Jupyter Book...${NC}"
+echo -e "${YELLOW}Environment activated. Building Jupyter Book...${NC}"
 echo ""
 
 # Clean and build
@@ -90,8 +72,5 @@ else
     echo ""
     echo -e "${RED}=== Build failed ===${NC}"
     echo "Check the error messages above for details"
-    echo ""
-    echo -e "${YELLOW}Note: For a fully compatible build environment, use Docker:${NC}"
-    echo "./test_build_docker.sh"
     exit 1
 fi

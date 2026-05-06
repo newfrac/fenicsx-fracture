@@ -47,11 +47,9 @@ docker run --rm \
     echo "=== Installing Node.js ==="
     apt-get update && apt-get install -y nodejs npm
     
-    echo "=== Installing pip dependencies ==="
-    python3 -m pip install --break-system-packages -U pip setuptools pkgconfig poetry-core
-    
-    echo "=== Installing project dependencies ==="
-    python3 -m pip install --break-system-packages --no-build-isolation --no-binary=h5py .
+    echo "=== Installing dependencies with conda ==="
+    conda install -c conda-forge -y fenics-dolfinx jupyter-book meshio h5py seaborn pandas tqdm pyvista sympy
+    conda install -c conda-forge -y jupytext nbmake ipyparallel
     
     echo ""
     echo "=== Building Jupyter Book ==="
