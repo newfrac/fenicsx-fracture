@@ -39,8 +39,9 @@ docker run --rm \
     -e LIBGL_ALWAYS_SOFTWARE=1 \
     -e PYVISTA_OFF_SCREEN=false \
     -e PYVISTA_JUPYTER_BACKEND=html \
+    --entrypoint bash \
     ${DOCKER_IMAGE} \
-    bash -c '
+    -c '
     set -e
     
     echo "=== Installing Node.js ==="
