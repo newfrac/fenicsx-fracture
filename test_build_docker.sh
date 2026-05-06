@@ -51,7 +51,7 @@ docker run --rm \
     python3 -m pip install --break-system-packages -U pip setuptools pkgconfig poetry-core
     
     echo "=== Installing project dependencies ==="
-    python3 -m pip install --break-system-packages --no-build-isolation --no-binary=h5py .[netgen]
+    python3 -m pip install --break-system-packages --no-build-isolation --no-binary=h5py .
     
     echo ""
     echo "=== Building Jupyter Book ==="

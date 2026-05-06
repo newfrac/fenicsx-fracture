@@ -55,16 +55,9 @@ pip install --upgrade pip setuptools pkgconfig poetry-core Cython wheel
 echo -e "${YELLOW}Installing jupyter-book...${NC}"
 pip install jupyter-book
 
-# Try to install dependencies from pyproject.toml with binary wheels
-echo -e "${YELLOW}Installing dependencies...${NC}"
-echo "Note: Using pre-built wheels where possible. Some compilation may occur."
-echo ""
-
-# Install with binary wheels for h5py if available
-pip install --only-binary :all: h5py 2>/dev/null || pip install h5py 2>/dev/null || echo "Warning: h5py installation attempted"
-
-# Install remaining dependencies
-pip install -q sympy scipy pyaml panel seaborn pandas tqdm pytest pytest-xdist nbmake ipyparallel jupytext 2>/dev/null || true
+# Install project dependencies
+echo -e "${YELLOW}Installing project dependencies from pyproject.toml...${NC}"
+pip install --no-build-isolation --no-binary=h5py . 2>/dev/null || pip install . 2>/dev/null || echo "Warning: some dependencies may not have installed"
 
 echo ""
 echo -e "${YELLOW}Dependencies installed. Building Jupyter Book...${NC}"
