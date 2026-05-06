@@ -416,7 +416,7 @@ import dolfinx.fem.petsc
 Res_acc_newmark_da = ufl.derivative(Res_acc_newmark, a_new, ufl.TrialFunction(V_t)) 
 
 acc_problem  = SNESProblem(Res_acc_newmark, a_new, bcs_a, J=Res_acc_newmark_da)
-b_vector_acc = dolfinx.la.create_petsc_vector(V_t.dofmap.index_map, V_t.dofmap.index_map_bs)
+b_vector_acc = dolfinx.fem.petsc.create_vector(V_t)
 J_matrix_acc = dolfinx.fem.petsc.create_matrix(dolfinx.fem.form(acc_problem.a))
 
 # Acceleration Solver (with consistent mass matrix)
@@ -434,7 +434,7 @@ solver_acc_snes.getKSP().getPC().setFactorSolverType('mumps')
 Res_alpha_newmark_dalpha = ufl.derivative(Res_alpha_newmark, alpha, ufl.TrialFunction(B_t)) 
 
 alpha_problem  = SNESProblem(Res_alpha_newmark, alpha, bcs_alpha, J=Res_alpha_newmark_dalpha)
-b_vector_alpha = dolfinx.la.create_petsc_vector(B_t.dofmap.index_map, B_t.dofmap.index_map_bs)
+b_vector_alpha = dolfinx.fem.petsc.create_vector(B_t)
 J_matrix_alpha = dolfinx.fem.petsc.create_matrix(dolfinx.fem.form(alpha_problem.a))
 
 # Acceleration Solver (with consistent mass matrix)

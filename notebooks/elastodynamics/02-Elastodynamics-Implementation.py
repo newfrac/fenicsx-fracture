@@ -377,7 +377,7 @@ Res_acc_newmark = ufl.replace(Res, {a: a_new,
 Res_acc_newmark_da = ufl.derivative(Res_acc_newmark, a_new, ufl.TrialFunction(V_t)) 
 
 acc_problem = SNESProblem(Res_acc_newmark, a_new, bcs_a, J=Res_acc_newmark_da)
-b_vector  = dolfinx.la.create_petsc_vector(V_t.dofmap.index_map, V_t.dofmap.index_map_bs)
+b_vector = dolfinx.fem.petsc.create_vector(V_t)
 J_matrix  = dolfinx.fem.petsc.create_matrix(dolfinx.fem.form(acc_problem.a))
 
 # Acceleration Solver (with consistent mass matrix)

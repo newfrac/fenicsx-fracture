@@ -56,23 +56,23 @@ def evaluate_at_points(
     else:
         input_points = np.empty((0, 3), dtype=points.dtype)
 
-    owernship = dolfinx.cpp.geometry.determine_point_ownership(
-        mesh._cpp_object, input_points, 1e-6
+    ownership = dolfinx.cpp.geometry.determine_point_ownership(
+        mesh._cpp_object, input_points, 1e-6, None
     )
     values = function.eval(
-        np.array(owernship.dest_points).reshape(-1, 3), owernship.dest_cells
+        np.array(ownership.dest_points).reshape(-1, 3), ownership.dest_cells
     ).reshape(-1, function.function_space.dofmap.bs)
     if comm.rank != 0:
-        assert np.allclose(owernship.dest_owners, 0)
+        assert np.allclose(ownership.dest_owners, 0)
     gathered_values = comm.gather(values, root=0)
-    # print(f"src_owner rank {comm.rank}:", owernship.src_owner)
-    # print(f"dest_cells rank {comm.rank}:", owernship.dest_cells)
-    # print(f"dest_owner rank {comm.rank}:", owernship.dest_owners)
+    # print(f"src_owner rank {comm.rank}:", ownership.src_owner)
+    # print(f"dest_cells rank {comm.rank}:", ownership.dest_cells)
+    # print(f"dest_owner rank {comm.rank}:", ownership.dest_owners)
     src_counter = np.zeros(comm.size, dtype=np.int32)
     bs = function.function_space.dofmap.bs
     values = np.zeros((input_points.shape[0], bs), dtype=function.x.array.dtype)
     if comm.rank == 0:
-        for i, owner in enumerate(owernship.src_owner):
+        for i, owner in enumerate(ownership.src_owner):
             if owner == -1:
                 print(f"Could not find point in mesh for {input_points[i]}")
                 continue

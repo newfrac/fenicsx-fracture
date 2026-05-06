@@ -83,8 +83,7 @@ def fem_solver(mesh, facets, Mechanical_data, Geometrical_data, dl):
     problem = SNES_problem(dfunctional, ddfunctional, u, bcs)
 
     # ............. b = xk (degrees of freedom)
-    dofs_domain, dofs_borders = V_u.dofmap.index_map, V_u.dofmap.index_map_bs
-    b = dolfinx.la.create_petsc_vector(dofs_domain, dofs_borders)
+    b = dolfinx.fem.petsc.create_vector(V_u)
     J = dolfinx.fem.petsc.create_matrix(problem.a)
 
     # ............ Definition of the solver
