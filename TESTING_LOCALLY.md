@@ -4,7 +4,25 @@ This directory contains scripts to test the Jupyter Book build locally, replicat
 
 ## Quick Start
 
-### Option 1: Local Python Virtual Environment (Faster)
+### Option 1: Docker (Recommended - Most Accurate)
+
+Uses the same FEniCS/DOLFINx container as GitHub Actions:
+
+```bash
+./test_build_docker.sh
+```
+
+This script will:
+1. Pull the FEniCS/DOLFINx stable container
+2. Install dependencies from `pyproject.toml`
+3. Build the book in an isolated, reproducible environment
+4. Create the `.nojekyll` file for GitHub Pages
+
+**Requirements:** Docker installed and running
+
+### Option 2: Local Python Virtual Environment (Faster)
+
+For quick iteration without Docker:
 
 ```bash
 ./test_build_local.sh
@@ -12,26 +30,11 @@ This directory contains scripts to test the Jupyter Book build locally, replicat
 
 This script will:
 1. Create a Python virtual environment (`.venv-test`)
-2. Install all dependencies from `docker/requirements.txt`
-3. Install jupyter-book and sphinx
-4. Build the book
-5. Create the `.nojekyll` file for GitHub Pages
+2. Install all dependencies from `pyproject.toml`
+3. Build the book
+4. Create the `.nojekyll` file for GitHub Pages
 
-**Requirements:** Python 3.12 or Python 3
-
-### Option 2: Docker (Most Accurate - Matches GitHub Actions exactly)
-
-```bash
-./test_build_docker.sh
-```
-
-This script will:
-1. Pull the Ubuntu 22.04 Docker image (same as GitHub Actions)
-2. Install Python 3.12 and all dependencies inside the container
-3. Build the book in an isolated environment
-4. Create the `.nojekyll` file
-
-**Requirements:** Docker installed
+**Requirements:** Python 3.11+ installed locally
 
 ## Viewing the Built Website
 
@@ -46,15 +49,38 @@ Then open: **http://localhost:8000**
 ## Troubleshooting
 
 ### Build fails with missing dependencies
-- Check `docker/requirements.txt` for required packages
-- Make sure you have Python 3 installed
-- For Docker option: ensure Docker daemon is running
+- **Docker option:** Make sure Docker is running: `docker ps`
+- **Local option:** Ensure you have Python 3.11+ installed: `python3 --version`
+- Check that `pyproject.toml` has the correct dependencies
+- For FEniCS/DOLFINx related issues, Docker is highly recommended
 
 ### `.nojekyll` file not created
-The scripts create this automatically after a successful build. This file is essential for GitHub Pages to serve static files in `_static/` and `_images/` directories.
+The scripts create this automatically after a successful build. This file is **essential** for GitHub Pages to serve static files in `_static/` and `_images/` directories.
 
-### Slow first-time build
-The first build caches notebooks. Subsequent builds should be faster. You can force a full rebuild by manually deleting the `_build/` directory.
+### Docker image pull fails
+```bash
+# Try pulling manually first
+docker pull ghcr.io/fenics/dolfinx/lab:stable
+```
+
+### Local build fails with Python version issues
+Use Docker instead - it has all the right dependencies pre-configured:
+```bash
+./test_build_docker.sh
+```
+
+## Continuous Testing
+
+To quickly rebuild while developing:
+
+```bash
+rm -rf _build && ./test_build_docker.sh
+```
+
+Or with local Python:
+```bash
+rm -rf _build && ./test_build_local.sh
+```
 
 ## Cleaning Up
 
@@ -64,10 +90,10 @@ To remove the virtual environment and build artifacts:
 rm -rf .venv-test _build
 ```
 
-## Continuous Testing
+## Matching GitHub Actions
 
-To quickly test while developing, use:
-
-```bash
-rm -rf _build && ./test_build_local.sh
-```
+These scripts replicate the exact GitHub Actions workflow:
+- **Docker option** uses `ghcr.io/fenics/dolfinx/lab:stable` container (exact match)
+- **Local option** approximates the environment with your system Python
+- Both create the `.nojekyll` file required for GitHub Pages deployment
+- Both install dependencies from `pyproject.toml` using the same pip flags

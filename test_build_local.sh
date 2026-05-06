@@ -12,19 +12,14 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-# Check if Python 3.12 is available
+# Check if Python 3 is available
 echo -e "${YELLOW}Checking Python installation...${NC}"
-if ! command -v python3.12 &> /dev/null; then
-    echo -e "${YELLOW}Python 3.12 not found, checking for python3...${NC}"
-    if ! command -v python3 &> /dev/null; then
-        echo -e "${RED}Error: Python 3 not found${NC}"
-        exit 1
-    fi
-    PYTHON_CMD="python3"
-else
-    PYTHON_CMD="python3.12"
+if ! command -v python3 &> /dev/null; then
+    echo -e "${RED}Error: Python 3 not found${NC}"
+    exit 1
 fi
 
+PYTHON_CMD="python3"
 echo "Using Python: $($PYTHON_CMD --version)"
 echo ""
 
@@ -35,20 +30,16 @@ source .venv-test/bin/activate
 
 # Upgrade pip
 echo -e "${YELLOW}Upgrading pip...${NC}"
-pip install --upgrade pip
+pip install --upgrade pip setuptools pkgconfig poetry-core
 
-# Install dependencies from docker/requirements.txt
-echo -e "${YELLOW}Installing dependencies from docker/requirements.txt...${NC}"
-if [ -f "docker/requirements.txt" ]; then
-    pip install -r docker/requirements.txt
+# Install dependencies from pyproject.toml
+echo -e "${YELLOW}Installing dependencies from pyproject.toml...${NC}"
+if [ -f "pyproject.toml" ]; then
+    pip install --no-build-isolation --no-binary=h5py .[netgen] 2>&1 | tail -20
 else
-    echo -e "${RED}Error: docker/requirements.txt not found${NC}"
+    echo -e "${RED}Error: pyproject.toml not found${NC}"
     exit 1
 fi
-
-# Install jupyter-book and sphinx
-echo -e "${YELLOW}Installing jupyter-book and sphinx...${NC}"
-pip install "jupyter-book<2.0.0" "sphinx>=8.0.0"
 
 echo ""
 echo -e "${YELLOW}Dependencies installed. Building Jupyter Book...${NC}"

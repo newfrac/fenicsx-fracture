@@ -10,10 +10,10 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 REPO_ROOT=$(pwd)
-DOCKER_IMAGE="ubuntu:22.04"
+DOCKER_IMAGE="ghcr.io/fenics/dolfinx/lab:stable"
 CONTAINER_NAME="fenicsx-fracture-build-test"
 
-echo -e "${YELLOW}=== Building Jupyter Book in Docker (Ubuntu 22.04) ===${NC}"
+echo -e "${YELLOW}=== Building Jupyter Book in Docker (FEniCS/DOLFINx) ===${NC}"
 echo ""
 
 # Check if Docker is available
@@ -22,36 +22,32 @@ if ! command -v docker &> /dev/null; then
     exit 1
 fi
 
-echo -e "${YELLOW}Pulling base image: ${DOCKER_IMAGE}${NC}"
+echo -e "${YELLOW}Pulling FEniCS/DOLFINx container: ${DOCKER_IMAGE}${NC}"
 docker pull ${DOCKER_IMAGE}
 
 echo -e "${YELLOW}Starting Docker container...${NC}"
 
-# Run the build in Docker
+# Run the build in Docker using the FEniCS/DOLFINx container
 docker run --rm \
     -v "${REPO_ROOT}:/workspace" \
     -w /workspace \
     --name ${CONTAINER_NAME} \
+    -e HDF5_MPI="ON" \
+    -e HDF5_DIR="/usr/local/" \
+    -e H5PY_SETUP_REQUIRES=0 \
+    -e DEB_PYTHON_INSTALL_LAYOUT=deb_system \
+    -e LIBGL_ALWAYS_SOFTWARE=1 \
+    -e PYVISTA_OFF_SCREEN=false \
+    -e PYVISTA_JUPYTER_BACKEND=html \
     ${DOCKER_IMAGE} \
     bash -c '
     set -e
     
-    echo "=== Setting up environment ==="
-    apt-get update && apt-get install -y \
-        python3.12 \
-        python3-pip \
-        libxrender1 \
-        xvfb \
-        git
+    echo "=== Installing pip dependencies ==="
+    python3 -m pip install --break-system-packages -U pip setuptools pkgconfig poetry-core
     
-    echo "=== Upgrading pip ==="
-    python3 -m pip install --upgrade pip
-    
-    echo "=== Installing dependencies ==="
-    pip3 install -r docker/requirements.txt
-    
-    echo "=== Installing jupyter-book and sphinx ==="
-    pip install "jupyter-book<2.0.0" "sphinx>=8.0.0"
+    echo "=== Installing project dependencies ==="
+    python3 -m pip install --break-system-packages --no-build-isolation --no-binary=h5py .[netgen]
     
     echo ""
     echo "=== Building Jupyter Book ==="
