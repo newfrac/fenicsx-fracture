@@ -24,9 +24,9 @@ jobs:
 
       - uses: ./.github/actions/install-dependencies
 
-      - name: Install dependencies with conda
+      - name: Install pip dependencies
         run: |
-          conda install -c conda-forge -y nbmake jupytext ipyparallel
+          python3 -m pip install nbmake jupytext ipyparallel
 
       - name: Test notebooks
         run: |
