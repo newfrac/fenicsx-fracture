@@ -29,13 +29,9 @@ jobs:
       - name: Install common packages
         uses: ./.github/actions/install-dependencies
 
-      - name: Install Node.js
-        run: |
-          apt-get update && apt-get install -y nodejs npm
-
       - name: Install pip dependencies
         run: |
-          python3 -m pip install jupyter-book meshio seaborn pandas tqdm pyvista sympy jupytext nbmake ipyparallel
+          python3 -m pip install "jupyter-book<2" meshio seaborn pandas tqdm pyvista sympy jupytext nbmake ipyparallel
 
       - name: Build the book
         run: jupyter-book build .
