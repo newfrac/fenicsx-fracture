@@ -22,11 +22,11 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
         # 2. Set up Python
       - name: Set up Python 3.12
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: 3.12
 
@@ -43,21 +43,16 @@ jobs:
       #  run: |
       #    # python3 -m pip install -U pip setuptools pkgconfig poetry-core
       #    # python3 -m pip install --no-binary=h5py .[netgen]
-      
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'  # or LTS version
 
       - name: Build Jupyter Book
         run: |
           rm -rf _build
-          jupyter-book build .
+          jupyter-book build . || { echo "Build failed"; find . -name "*.log" -exec cat {} \;; exit 1; }
 
       - name: Create .nojekyll file
         run: touch ./_build/html/.nojekyll
 
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         if: always()
         with:
           name: webpage
