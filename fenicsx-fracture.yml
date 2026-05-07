@@ -1,9 +1,9 @@
 name: fenicsx-fracture
 channels:
   - conda-forge
-  - defaults
+channel-priority: strict
 dependencies:
-  - python=3.11
+  - python>=3.10
   - fenics-dolfinx=0.10.0
   - jupyter-book<2
   - matplotlib
@@ -12,17 +12,10 @@ dependencies:
   - sympy
   - scipy
   - gmsh
-  - python-gmsh
-  - pythreejs
-  - autopep8
-  - black
-  - flake8
-  - autoflake
   - pyaml
   - pandas
   - jupyterlab
   - pyvista
-  - ipygany
   - jupytext
   - ipyparallel
   - h5py
@@ -30,5 +23,5 @@ dependencies:
   - tqdm
   - meshio
   - nbmake
+  - ruff
   - pip
-
