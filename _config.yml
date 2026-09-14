@@ -62,4 +62,18 @@ html:
         Funded by European Union’s Horizon 2020 research and innovation programme under a Marie Skłodowska-Curie Actions Grant Agreement n. 861061 – Project NEWFRAC
     </div>
 
-exclude_patterns: [README.md]
+# Everything Sphinx must not crawl. This list replaces jupyter-book's defaults,
+# so the defaults have to be repeated here.
+exclude_patterns:
+  - README.md
+  - TESTING_LOCALLY.md
+  - _build
+  - Thumbs.db
+  - .DS_Store
+  - "**.ipynb_checkpoints"
+  - .venv*
+  - .pixi
+  - .pytest_cache
+  - docker
+  - .devcontainer
+  - .github
