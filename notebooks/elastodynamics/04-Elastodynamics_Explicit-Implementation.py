@@ -38,7 +38,7 @@ from mpi4py import MPI
 from petsc4py import PETSc
 from matplotlib import pyplot as plt
 import sys
-#import mesh_plotter
+#from mesh_plotter import mesh_plotter
 import dolfinx.fem.petsc
 
 
@@ -134,7 +134,7 @@ fdim = gdim - 1
 # mesh_plotter(mesh)
 
 # %% [markdown]
-# As explained in the `Elastodynamics_Explicit-Theory` the CFL condition for an explicit elastodynamics solver is based on the minimum distance between nodes in the mesh. Nonetheless, and to the best of our knowledge, `dolfinx:v0.6.0-r1` does not have a built-in function that calculates the minimum distance between nodes in an element, yet the maximum counterpart can be determined using `dolfinx.cpp.mesh.h`. Hence, given that the elements here implemented are not distorted, and considering the safety factor used for the CFL condition, the minimum in the domain of the maximum distance between two nodes of an element is hereafter used as `h_min` without compromising the stability of the solution.
+# As explained in the `Elastodynamics_Explicit-Theory` the CFL condition for an explicit elastodynamics solver is based on the minimum distance between nodes in the mesh. Nonetheless, and to the best of our knowledge, DOLFINx does not have a built-in function that calculates the minimum distance between nodes in an element, yet the maximum counterpart can be determined using `dolfinx.cpp.mesh.h`. Hence, given that the elements here implemented are not distorted, and considering the safety factor used for the CFL condition, the minimum in the domain of the maximum distance between two nodes of an element is hereafter used as `h_min` without compromising the stability of the solution.
 
 # %%
 # %%px
@@ -474,4 +474,8 @@ if comm.rank == 0:
     ax2[1].set_ylabel('Reaction force [N]')
     plt.show()
 
+# %% [markdown]
+# The engines launched at the beginning keep running once the notebook reaches its end. Stopping the cluster releases them.
+
 # %%
+rc.cluster.stop_cluster_sync()

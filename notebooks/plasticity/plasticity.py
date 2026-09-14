@@ -13,7 +13,7 @@
 # ---
 
 # %% [markdown]
-# ## Von Mises elasto-plasticity
+# # Von Mises elasto-plasticity
 
 # %% [markdown]
 #
@@ -49,9 +49,9 @@ import ufl
 import basix
 import gmsh
 
-#BUG: the line below is needed to correctly call `fem.petsc.create_vector` 
-# in FEniCSx v0.7.0
-import dolfinx.fem.petsc 
+# `dolfinx.fem.petsc` is an optional submodule: importing `dolfinx.fem` does not
+# pull it in, so `fem.petsc.create_vector` needs this explicit import.
+import dolfinx.fem.petsc
 
 
 petsc_options_SNES = {
@@ -220,7 +220,7 @@ sig0 = fem.Constant(msh, ScalarType(mech["sig0"]))  # yield strength
 H = fem.Constant(msh, ScalarType(mech["H"]))   # hardening modulus
 
 # %% [markdown]
-# # Function spaces and boundary conditions
+# ## Function spaces and boundary conditions
 
 # %% [markdown]
 # Function spaces will involve a standard CG space for the displacement whereas internal state variables such as plastic strains will be represented using a *Quadrature* element. This choice will make it possible to express the complex non-linear material constitutive equation at the Gauss points only, without involving any interpolation of non-linear expressions throughout the element. It will ensure an optimal convergence rate for the Newton-Raphson method used in the non linear solver. 
@@ -281,7 +281,7 @@ def F_ext(v):
 
 
 # %% [markdown]
-# # Constitutive relation updates
+# ## Constitutive relation updates
 #
 # Before writing the variational form, we now define some useful functions which will enable performing the constitutive relation update using a return mapping procedure. This step is quite classical in FEM plasticity for a von Mises criterion with isotropic hardening and follow notations from *Bonnet et al, The finite element method in solid mechanics, 2014*. 
 #
@@ -376,13 +376,13 @@ def compute_new_state(du, sig_old, p_old) :
 
 
 # %% [markdown]
-# # Global problem and non linear solver
+# ## Global problem and non linear solver
 #
 # We are now in position to derive the global problem with its associated non linear solver. Each iteration will require establishing equilibrium by driving to zero the residual between the internal forces associated with the current stress state $\sigma$ and the external force vector. 
 
 # %%
 new_sig_tr, new_sig_dev, dp_ = compute_new_state(du, sig, p)
-residual_u = ufl.inner(new_sig_tr, eps(v)) * dx_m + ufl.inner(new_sig_dev, eps(v)) * dx #- F_ext(v) 
+residual_u = ufl.inner(new_sig_tr, eps(v)) * dx_m + ufl.inner(new_sig_dev, eps(v)) * dx - F_ext(v)
 J_u = ufl.derivative(residual_u, du, u_)
 
 
@@ -470,12 +470,7 @@ class SNESSolver:
         # Zero the residual vector
         b.array[:] = 0
         fem.petsc.assemble_vector(b, self.F_form)
-        # this is a nasty workaround to include the force term with the bug https://github.com/FEniCS/dolfinx/issues/2664
-        force_form = fem.form(-F_ext(v))
-        b_ds = fem.petsc.create_vector(force_form.function_spaces[0])
-        fem.petsc.assemble_vector(b_ds,force_form)
-        b.array[:] += b_ds.array
-        
+
         # Apply boundary conditions
         fem.petsc.apply_lifting(b, [self.J_form], [self.bcs], [x], alpha=-1.0)
         b.ghostUpdate(addv=PETSc.InsertMode.ADD, mode=PETSc.ScatterMode.REVERSE)
@@ -495,14 +490,14 @@ class SNESSolver:
 
 
     def solve(self):
-        print(f"Solving {self.prefix}")  # DOLFINx 0.10: use standard Python logging
-        try:
-            self.solver.solve(None, self.u.x.petsc_vec)
-            self.u.x.scatter_forward()
-            return (self.solver.getIterationNumber(), self.solver.getConvergedReason())
-        except Warning:
-            print(f"WARNING: {self.prefix} solver failed to converge, what's next?")  # DOLFINx 0.10
-            raise RuntimeError(f"{self.prefix} solvers did not converge")
+        print(f"Solving {self.prefix}")
+        self.solver.solve(None, self.u.x.petsc_vec)
+        self.u.x.scatter_forward()
+        its = self.solver.getIterationNumber()
+        reason = self.solver.getConvergedReason()
+        if reason < 0:
+            raise RuntimeError(f"{self.prefix} solver diverged, SNES reason {reason}")
+        return (its, reason)
 
 my_problem = SNESSolver(residual_u, du, J_form = J_u, bcs = bcs, petsc_options=petsc_options_SNES)
 
@@ -522,7 +517,7 @@ for i, t in enumerate(load_steps):
     print(f"\n----------- Solve for t={t:5.3f} -----------")
     out = my_problem.solve()
     print("Number of iterations : ", out[0])
-    print(f"Converged reason = {out[1]:1.3f}")
+    print(f"Converged reason = {out[1]}")
 
     interpolate_quadrature(tensor_to_vector(new_sig_dev + new_sig_tr), sig)
     interpolate_quadrature(p + dp_, p)
