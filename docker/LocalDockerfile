@@ -1,61 +1,56 @@
-FROM dolfinx/dev-env:nightly
+# Build DOLFINx from source, for developing against a version that has no
+# released image yet. The published image (docker/Dockerfile) is the one to use
+# for running the book.
+#
+#   docker build -t fenicsx-fracture-src -f docker/LocalDockerfile .
 
+FROM ghcr.io/fenics/dolfinx/dev-env:v0.11.0
 
 WORKDIR /tmp/
 
-ADD requirements.txt /tmp/requirements.txt
+COPY docker/requirements.txt /tmp/requirements.txt
 
-ARG UFL_BRANCH=main
-ARG FFCX_BRANCH=main
-ARG BASIX_BRANCH=main
-ARG DOLFINX_BRANCH=main
+ARG UFL_BRANCH=2026.1.0
+ARG FFCX_BRANCH=v0.11.0
+ARG BASIX_BRANCH=v0.11.0
+ARG DOLFINX_BRANCH=v0.11.0
 ARG BUILD_TYPE=Release
-ARG PETSC_ARCH=linux-gnu-real-32
+ARG PETSC_ARCH=linux-gnu-real64-32
 ARG HDF5_DIR="/usr/local"
 ARG HDF5_MPI="ON"
-# Can be set to "notebook"
-ARG JUPYTER_TYPE="lab" 
-
 
 # Install python dependencies
-RUN pip3 install --upgrade pip 
-RUN HDF5_MPI=${HDF5_MPI} CC=mpicc HDF5_DIR=${HDF5_DIR} pip3 install --no-cache-dir -r requirements.txt
+RUN python3 -m pip install --upgrade pip
+RUN HDF5_MPI=${HDF5_MPI} CC=mpicc HDF5_DIR=${HDF5_DIR} \
+    python3 -m pip install --no-cache-dir -r /tmp/requirements.txt
 
 # pyvista dependencies from apt
 RUN apt-get -qq update && \
-    apt-get -y install libgl1-mesa-dev xvfb && \
+    apt-get -y install libgl1-mesa-dev libxrender1 xvfb && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /var/tmp/*
 
-# Install components from dolfinx/lab
-RUN pip3 install pyvista matplotlib pythreejs ipygany && \
-    pip3 cache purge && \
-    jupyter nbextension enable --py --sys-prefix ipygany
+RUN python3 -m pip install --no-cache-dir jupyterlab pyvista matplotlib && \
+    python3 -m pip cache purge
 
-# Install basix, ffcx, ufl
-RUN git clone https://github.com/FEniCS/basix.git && \
-    cd basix && \
-    git checkout ${BASIX_BRANCH} && \
-    cd .. && \
+# Install basix, ufl, ffcx
+RUN git clone --branch ${BASIX_BRANCH} --depth 1 https://github.com/FEniCS/basix.git && \
     cmake -G Ninja -B build-basix -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -S ./basix/cpp/ && \
     cmake --build build-basix --parallel 3 && \
     cmake --install build-basix && \
-    BUILD_TYPE=${BUILD_TYPE} pip3 install ./basix/python && \
+    python3 -m pip install ./basix/python && \
     python3 -m pip install git+https://github.com/FEniCS/ufl.git@${UFL_BRANCH} && \
     python3 -m pip install git+https://github.com/FEniCS/ffcx.git@${FFCX_BRANCH}
 
-# Install DOLFINX
-RUN git clone https://github.com/FEniCS/dolfinx.git && \  
-    cd dolfinx && \
-    git checkout ${DOLFINX_BRANCH} && \
-    cd .. && \
-    PETSC_ARCH=${PETSC_ARCH} cmake -G Ninja -DCMAKE_BUILD_TYPE=${DOLFINX_BUILD_TYPE} -B build-dolfinx -S ./dolfinx/cpp/ && \
-    cmake --build build-dolfinx && \
+# Install DOLFINx
+RUN git clone --branch ${DOLFINX_BRANCH} --depth 1 https://github.com/FEniCS/dolfinx.git && \
+    PETSC_ARCH=${PETSC_ARCH} cmake -G Ninja -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -B build-dolfinx -S ./dolfinx/cpp/ && \
+    cmake --build build-dolfinx --parallel 3 && \
     cmake --install build-dolfinx && \
     . /usr/local/lib/dolfinx/dolfinx.conf && \
-    PETSC_ARCH=${PETSC_ARCH}  BUILD_TYPE=${BUILD_TYPE} python3 -m pip -v install ./dolfinx/python/
+    PETSC_ARCH=${PETSC_ARCH} python3 -m pip -v install --no-build-isolation ./dolfinx/python/
 
 EXPOSE 8888/tcp
 
-ENV SHELL /bin/bash
-ENTRYPOINT ["jupyter", ${JUPYTER_TYPE}, "--ip", "0.0.0.0", "--no-browser", "--allow-root"]
+ENV SHELL=/bin/bash
+ENTRYPOINT ["jupyter", "lab", "--ip", "0.0.0.0", "--no-browser", "--allow-root"]
