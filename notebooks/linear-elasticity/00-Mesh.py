@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.19.1
+#       jupytext_version: 1.19.5
 #   kernelspec:
 #     display_name: fenicsx-fracture
 #     language: python
@@ -62,18 +62,20 @@ gdim = 2
 # They are not strictly necessary here, but we keep them to have this example working in general.
 # The are set so that when we perform parallel computations, the mesh is generated on one processor (`model_rank=0`) and then it is distributed to all the processors (`mesh_comm = MPI.COMM_WORLD`). Further documentation about the use of MPI can be found at https://scientificcomputing.github.io/mpi-tutorial/notebooks/dolfinx_MPI_tutorial.html
 #
-# We define a dictionary `tags` to associate clear names to numerical tags that are used to identify the different part of the domain and the boundary
+# We define a dictionary `tags` to associate clear names to numerical tags that are used to identify the different parts of the domain and the boundary
 
 # %%
 mesh_comm = MPI.COMM_WORLD
 model_rank = 0
 gmsh.initialize()
 
-facet_tags = {"left": 1, "right": 2, "top": 3, "crack": 4, "bottom_no_crack": 5}
-cell_tags = {"all": 20}
+facet_markers = {"left": 1, "right": 2, "top": 3, "crack": 4, "bottom_no_crack": 5}
+cell_markers = {"all": 20}
 
+# every process needs a model to hand to `model_to_mesh` below, but only
+# `model_rank` builds the geometry and meshes it
+model = gmsh.model()
 if mesh_comm.rank == model_rank:
-    model = gmsh.model()
     model.add("Rectangle")
     model.setCurrent("Rectangle")
     # Create the points
@@ -83,11 +85,11 @@ if mesh_comm.rank == model_rank:
     p4 = model.geo.addPoint(Lx, Ly, 0, lc)
     p5 = model.geo.addPoint(0, Ly, 0, lc)
     # Create the lines
-    l1 = model.geo.addLine(p1, p2, tag=facet_tags["crack"])
-    l2 = model.geo.addLine(p2, p3, tag=facet_tags["bottom_no_crack"])
-    l3 = model.geo.addLine(p3, p4, tag=facet_tags["right"])
-    l4 = model.geo.addLine(p4, p5, tag=facet_tags["top"])
-    l5 = model.geo.addLine(p5, p1, tag=facet_tags["left"])
+    l1 = model.geo.addLine(p1, p2, tag=facet_markers["crack"])
+    l2 = model.geo.addLine(p2, p3, tag=facet_markers["bottom_no_crack"])
+    l3 = model.geo.addLine(p3, p4, tag=facet_markers["right"])
+    l4 = model.geo.addLine(p4, p5, tag=facet_markers["top"])
+    l5 = model.geo.addLine(p5, p1, tag=facet_markers["left"])
     # Create the surface
     cloop1 = model.geo.addCurveLoop([l1, l2, l3, l4, l5])
     surface_1 = model.geo.addPlaneSurface([cloop1])
@@ -112,11 +114,11 @@ if mesh_comm.rank == model_rank:
 
     # Assign mesh and facet tags
     surface_entities = [entity[1] for entity in model.getEntities(2)]
-    model.addPhysicalGroup(2, surface_entities, tag=cell_tags["all"])
+    model.addPhysicalGroup(2, surface_entities, tag=cell_markers["all"])
     model.setPhysicalName(2, 2, "Rectangle surface")
     model.mesh.generate(gdim)
 
-    for key, value in facet_tags.items():
+    for key, value in facet_markers.items():
         model.addPhysicalGroup(1, [value], tag=value)
         model.setPhysicalName(1, value, key)
 
@@ -128,6 +130,7 @@ if mesh_comm.rank == model_rank:
 msh, cell_tags, facet_tags, *_ = gmshio.model_to_mesh(
     model, mesh_comm, model_rank, gdim=gdim
 )
+gmsh.finalize()
 msh.name = "rectangle"
 cell_tags.name = f"{msh.name}_cells"
 facet_tags.name = f"{msh.name}_facets"
@@ -149,9 +152,7 @@ with dolfinx.io.XDMFFile(MPI.COMM_WORLD, "output/mesh.xdmf", "w") as file:
 # %%
 import pyvista
 
-try: 
-except:
-    pyvista.set_jupyter_backend("static")
+pyvista.set_jupyter_backend("static")
 
 
 # Extract topology from mesh and create pyvista mesh
@@ -168,7 +169,7 @@ else:
     plotter.screenshot("mesh.png")
 
 # %% [markdown]
-# We wrap the code to generate the mesh in the external module `../python/meshes` to reuse it in the following tutorials.
+# We wrap the code to generate the mesh in the external module `../utils/meshes` to reuse it in the following tutorials.
 # We can use it as follows:
 
 # %%

@@ -1,8 +1,6 @@
 import gmsh
-import numpy as np
 from mpi4py import MPI
-from dolfinx.io import gmsh as gmshio, XDMFFile
-import dolfinx.plot
+from dolfinx.io import gmsh as gmshio
 
 
 def generate_mesh_with_crack(
@@ -29,8 +27,10 @@ def generate_mesh_with_crack(
     }
     cell_tags = {"all": 20}
 
+    # every process needs a model to hand to `model_to_mesh`, but only
+    # `model_rank` builds the geometry and meshes it
+    model = gmsh.model()
     if mesh_comm.rank == model_rank:
-        model = gmsh.model()
         model.add("Rectangle")
         model.setCurrent("Rectangle")
         # Create the points
@@ -47,7 +47,7 @@ def generate_mesh_with_crack(
         l5 = model.geo.addLine(p5, p1, tag=facet_tags["left"])
         # Create the surface
         cloop1 = model.geo.addCurveLoop([l1, l2, l3, l4, l5])
-        surface_1 = model.geo.addPlaneSurface([cloop1])
+        model.geo.addPlaneSurface([cloop1])
 
         # Define the mesh size and fields for the mesh refinement
         model.mesh.field.add("Distance", 1)
@@ -77,11 +77,12 @@ def generate_mesh_with_crack(
             model.addPhysicalGroup(1, [value], tag=value)
             model.setPhysicalName(1, value, key)
 
-        msh, cell_tags, facet_tags, *_ = gmshio.model_to_mesh(
-            model, mesh_comm, model_rank, gdim=gdim
-        )
-        gmsh.finalize()
-        msh.name = "rectangle"
-        cell_tags.name = f"{msh.name}_cells"
-        facet_tags.name = f"{msh.name}_facets"
-        return msh, cell_tags, facet_tags
+    # collective: the mesh is built on `model_rank` and distributed to all
+    msh, cell_tags, facet_tags, *_ = gmshio.model_to_mesh(
+        model, mesh_comm, model_rank, gdim=gdim
+    )
+    gmsh.finalize()
+    msh.name = "rectangle"
+    cell_tags.name = f"{msh.name}_cells"
+    facet_tags.name = f"{msh.name}_facets"
+    return msh, cell_tags, facet_tags

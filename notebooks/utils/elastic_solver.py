@@ -1,19 +1,18 @@
 import sys
+from pathlib import Path
 
-sys.path.append("../python")
+# the helper modules sit next to this one
+sys.path.append(str(Path(__file__).resolve().parent))
 
-# Import required libraries
-import matplotlib.pyplot as plt
 import numpy as np
 
 import dolfinx.fem as fem
+import dolfinx.fem.petsc  # noqa: F401  — registers fem.petsc, used below
 import dolfinx.mesh as mesh
 import dolfinx.io as io
-import dolfinx.plot as plot
 import ufl
 
 from mpi4py import MPI
-from petsc4py import PETSc
 from petsc4py.PETSc import ScalarType
 
 from meshes import generate_mesh_with_crack
@@ -32,7 +31,7 @@ def solve_elasticity(
     dist_max=0.3,
     verbosity=10,
 ):
-    msh, mt, ft = generate_mesh_with_crack(
+    msh, cell_tags, facet_tags = generate_mesh_with_crack(
         Lcrack=Lcrack,
         Lx=Lx,
         Ly=Ly,
@@ -44,8 +43,11 @@ def solve_elasticity(
     )
     V = fem.functionspace(msh, ("Lagrange", 1, (2,)))
 
+    # the ligament ahead of the tip, the crack tip itself included: a facet is
+    # selected only if all its vertices satisfy this, so the tolerance is what
+    # keeps the node at x = Lcrack on the symmetry line
     def bottom_no_crack(x):
-        return np.logical_and(np.isclose(x[1], 0.0), x[0] > Lcrack)
+        return np.logical_and(np.isclose(x[1], 0.0), x[0] > Lcrack - 1e-9)
 
     def right(x):
         return np.isclose(x[0], Lx)
@@ -71,8 +73,8 @@ def solve_elasticity(
     top_facets = mesh.locate_entities_boundary(
         msh, 1, lambda x: np.isclose(x[1], Ly)
     )
-    mt = mesh.meshtags(msh, 1, top_facets, 1)
-    ds = ufl.Measure("ds", subdomain_data=mt)
+    top_tag = mesh.meshtags(msh, 1, top_facets, 1)
+    ds = ufl.Measure("ds", domain=msh, subdomain_data=top_tag)
 
     u = ufl.TrialFunction(V)
     v = ufl.TestFunction(V)
@@ -99,7 +101,7 @@ def solve_elasticity(
         # Volume force
         b = fem.Constant(msh, ScalarType((0, 0)))
 
-        # Surface force on the top
+        # Surface force on the top, pulling the crack open (mode I)
         f = fem.Constant(msh, ScalarType((0, load)))
         return ufl.dot(b, v) * dx + ufl.dot(f, v) * ds(1)
 
@@ -113,16 +115,18 @@ def solve_elasticity(
     uh = problem.solve()
     uh.name = "displacement"
 
-    energy = fem.assemble_scalar(fem.form(0.5 * a(uh, uh) - L(uh)))
-    print(f"The potential energy for Lcrack={Lcrack:2.3e} is {energy:2.3e}")
+    # each process assembles its own part of the integral
+    energy = msh.comm.allreduce(
+        fem.assemble_scalar(fem.form(0.5 * a(uh, uh) - L(uh))), op=MPI.SUM
+    )
+    if msh.comm.rank == 0:
+        print(f"The potential energy for Lcrack={Lcrack:2.3e} is {energy:2.3e}")
     sigma_ufl = sigma(eps(uh))
     return uh, energy, sigma_ufl
 
 
 if __name__ == "__main__":
-    from mpi4py import MPI
-
-    uh, energy = solve_elasticity(
+    uh, energy, sigma_ufl = solve_elasticity(
         Lx=1,
         Ly=0.5,
         Lcrack=0.3,
@@ -132,8 +136,10 @@ if __name__ == "__main__":
         dist_max=0.3,
     )
 
+    output = Path(__file__).resolve().parent.parent / "linear-elasticity" / "output"
+    output.mkdir(parents=True, exist_ok=True)
     with io.XDMFFile(
-        MPI.COMM_WORLD, "output2/elasticity-demo.xdmf", "w"
+        MPI.COMM_WORLD, str(output / "elasticity-solver.xdmf"), "w"
     ) as file:
         file.write_mesh(uh.function_space.mesh)
         file.write_function(uh)

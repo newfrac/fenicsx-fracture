@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.19.1
+#       jupytext_version: 1.19.5
 #   kernelspec:
 #     display_name: fenicsx-fracture
 #     language: python
@@ -39,7 +39,7 @@
 # DOLFINx is advanced library that allows for efficient parallel computation. For the sake of simplicity, we assume here to work on a single processor and will not use MPI-related commands. Using DOLFINx with MPI will be covered in the afternoon session.
 
 # %% [markdown]
-# We start importing the required libraries. 
+# We start by importing the required libraries. 
 
 # %%
 # Import required libraries
@@ -54,13 +54,12 @@ import dolfinx.fem.petsc
 import ufl
 
 from mpi4py import MPI
-from petsc4py.PETSc import ScalarType
 
 # %% [markdown]
 # Let us generate a mesh using gmsh (http://gmsh.info/). 
 # The mesh is refined around the crack tip.
-# The function to generate the mesh is reported in the external file `meshes.py` located in the directory `python`.
-# To import it, we add `python` to the path where the system is looking for functions to import
+# The function to generate the mesh is reported in the external file `meshes.py` located in the directory `utils`.
+# To import it, we add `utils` to the path where the system is looking for functions to import
 
 # %%
 import sys
@@ -76,6 +75,7 @@ dist_min = .1
 dist_max = .3
 msh, mt, ft = generate_mesh_with_crack(
         Lcrack=Lcrack,
+        Lx=Lx,
         Ly=Ly,
         lc=lc,  # caracteristic length of the mesh
         refinement_ratio=10,  # how much it is refined at the tip zone
@@ -91,9 +91,7 @@ msh, mt, ft = generate_mesh_with_crack(
 
 # %%
 import pyvista
-try: 
-except:
-    pyvista.set_jupyter_backend("static")
+pyvista.set_jupyter_backend("static")
 grid = pyvista.UnstructuredGrid(*plot.vtk_mesh(msh))
 plotter = pyvista.Plotter()
 plotter.add_mesh(grid, show_edges=True)
@@ -123,19 +121,14 @@ V = fem.functionspace(msh, ("Lagrange", 1, (2,)))
 
 # %%
 def bottom_no_crack(x):
+    # the ligament ahead of the tip, the tip node included. A facet is kept
+    # only when all its vertices satisfy this, so the tolerance is what puts
+    # the node at x = Lcrack on the symmetry line rather than on the crack.
     return np.logical_and(np.isclose(x[1], 0.0), 
-                          x[0] > Lcrack)
+                          x[0] > Lcrack - 1e-9)
 
 def right(x):
     return np.isclose(x[0], Lx)
-
-def top(x):
-    return np.isclose(x[1], Ly)
-
-delta = 1.0
-top_facets = mesh.locate_entities_boundary(msh, msh.topology.dim-1, top)
-top_dofs = fem.locate_dofs_topological(V, msh.topology.dim-1, top_facets)
-bc_top = fem.dirichletbc(np.array([0.0,delta],dtype=np.float64), top_dofs, V)
 
 right_facets = mesh.locate_entities_boundary(msh, msh.topology.dim-1, right)
 right_dofs_x = fem.locate_dofs_topological(V.sub(0), msh.topology.dim-1, right_facets)
@@ -159,10 +152,8 @@ bcs = [bc_bottom, bc_right]
 # %%
 dx = ufl.Measure("dx",domain=msh)
 top_facets = mesh.locate_entities_boundary(msh, 1, lambda x : np.isclose(x[1], Ly))
-# mt = mesh.meshtags(msh, 1, top_facets, 1) is failing for some installations
-# Use then workaround below
-mt = mesh.meshtags(msh, 1, top_facets, 1)
-ds = ufl.Measure("ds", subdomain_data=mt)
+top_tag = mesh.meshtags(msh, 1, top_facets, 1)
+ds = ufl.Measure("ds", domain=msh, subdomain_data=top_tag)
 
 # %% [markdown]
 # ## Define the variational problem 
@@ -211,15 +202,10 @@ def L(v):
     # Volume force
     b = fem.Constant(msh,(0.0, 0.0))
 
-    # Surface force on the top
-    f = fem.Constant(msh,(1.0, 0.0))
+    # Surface force on the top, pulling the crack open (mode I)
+    f = fem.Constant(msh,(0.0, 1.0))
     return ufl.dot(b, v) * dx + ufl.dot(f, v) * ds(1)
 
-
-# %% [markdown]
-# Let us plot the solution using `pyvista`, see
-# - https://jorgensd.github.io/dolfinx-tutorial/chapter3/component_bc.html
-# - https://docs.fenicsproject.org/dolfinx/v0.5.0/python/demos/demo_pyvista.html
 
 # %% [markdown]
 # ## Define the linear problem and solve
@@ -239,7 +225,9 @@ uh.name = "displacement"
 # We can easily calculate the potential energy
 
 # %%
-energy = fem.assemble_scalar(fem.form(0.5 * a(uh, uh) - L(uh)))
+energy = msh.comm.allreduce(
+    fem.assemble_scalar(fem.form(0.5 * a(uh, uh) - L(uh))), op=MPI.SUM
+)
 print(f"The potential energy is {energy:2.3e}")
 
 # %% [markdown]
@@ -256,10 +244,10 @@ with io.XDMFFile(MPI.COMM_WORLD, "output/elasticity-demo.xdmf", "w") as file:
 # We calculate here the Von Mises stress by interpolating the corresponding ufl expression, see https://jorgensd.github.io/dolfinx-tutorial/chapter2/linearelasticity_code.html#stress-computation
 
 # %%
-sigma_iso = 1./3*ufl.tr(sigma(eps(uh)))*ufl.Identity(len(uh))
+sigma_iso = 1./3*ufl.tr(sigma(eps(uh)))*ufl.Identity(2)
 sigma_dev =  sigma(eps(uh)) - sigma_iso
 von_Mises = ufl.sqrt(3./2*ufl.inner(sigma_dev, sigma_dev))
-V_von_mises = fem.functionspace(msh, ("DG", 0, (1,)))
+V_von_mises = fem.functionspace(msh, ("DG", 0))
 stress_expr = fem.Expression(von_Mises, V_von_mises.element.interpolation_points)
 vm_stress = fem.Function(V_von_mises)
 vm_stress.interpolate(stress_expr)
@@ -310,7 +298,7 @@ uh, energy, _ = solve_elasticity(
     verbosity=1
 )
 
-with io.XDMFFile(MPI.COMM_WORLD, "output/elasticity-demo.xdmf", "w") as file:
+with io.XDMFFile(MPI.COMM_WORLD, "output/elasticity-solver.xdmf", "w") as file:
     file.write_mesh(uh.function_space.mesh)
     file.write_function(uh)
 
