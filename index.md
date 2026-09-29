@@ -22,7 +22,26 @@ Chao Correas, A., Jack S. Hale, Jiménez Alfaro, S., Andrey Latyshev, & Maurini,
 
 ## Installation
 
-To run this notebooks on your computer, we suggest using Docker or Conda, as explained below.
+The notebooks require **DOLFINx 0.11.0**. To run them on your computer, we suggest using Conda or Docker, as explained below.
+
+### Conda
+
+To run the notebooks locally, we recommend to use the conda environment provided in this repository. To install conda, please follow the instructions [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/).
+
+To create the conda environment and activate it
+
+```bash
+conda env create -f fenicsx-fracture.yml
+conda activate fenicsx-fracture
+```
+
+To update an existing environment after the file has changed
+
+```bash
+conda env update -f fenicsx-fracture.yml --prune
+```
+
+You can then start JupyterLab with `jupyter lab`.
 
 ### Docker
 
@@ -50,17 +69,6 @@ You can then access the jupyter lab notebook opening in your browser one of the 
 
 Steps 1-3 need to be done only the first time. Afterwards, you can then start the container with the command in step 4 directly.
 
-### Conda
-
-To run the notebooks locally, we recommend to use the conda environment provided in this repository. To install conda, please follow the instructions [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/).
-
-To create the conda environment and activate it
-
-```bash
-conda env create -f fenicsx-fracture.yml
-conda activate fenicsx-fracture
-```
-
 ### Binder
 
 Although we recommend executing the notebook locally, you can also use the cloud-based binder service to execute the notebooks:
@@ -71,7 +79,7 @@ Although we recommend executing the notebook locally, you can also use the cloud
 
 Go to [Google Colab](https://colab.research.google.com) and create a new notebook. We will use the FEM on Colab project to install FEniCSx. Copy and paste into a new notebook cell:
 
-```python
+```ipython3
 try:
     import dolfinx
 except ImportError:

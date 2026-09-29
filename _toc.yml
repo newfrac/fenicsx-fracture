@@ -27,5 +27,5 @@ parts:
       - file: notebooks/plasticity/plasticity
   - caption: Coupled Criterion
     chapters:
-      - file: notebooks/coupled-criterion/Coupled_Criterion
+      - file: notebooks/coupled-criterion/coupled_criterion
 # Removed the problematic README.md file

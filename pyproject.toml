@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "DOLFINx_Tutorial"
-version = "0.10.0"
+version = "0.11.0"
 dependencies = [
     "jupyter-book",
     "meshio",
@@ -19,8 +19,9 @@ dependencies = [
 [project.optional-dependencies]
 dev = ["pdbpp", "ipython", "jupytext", "ruff", "nbmake", "ipyparallel"]
 
-# FEniCS/DOLFINx should be installed via conda:
-# conda install -c conda-forge fenics-dolfinx
+# FEniCS/DOLFINx 0.11.0 should be installed via conda:
+# conda install -c conda-forge fenics-dolfinx=0.11.0
+# or use the environment file: conda env create -f fenicsx-fracture.yml
 
 [tool.setuptools]
 packages = []

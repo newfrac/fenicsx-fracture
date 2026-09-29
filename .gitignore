@@ -130,3 +130,6 @@ notebooks/*/*.xdmf
 notebooks/*/*.xmdf
 notebooks/*/*/*.h5
 notebooks/*/*/*.xdmf
+
+# Off-screen pyvista screenshot produced when running 00-Mesh
+notebooks/linear-elasticity/mesh.png
