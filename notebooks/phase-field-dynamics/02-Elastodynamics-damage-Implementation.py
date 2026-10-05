@@ -42,7 +42,7 @@ from mpi4py import MPI
 from petsc4py import PETSc
 from matplotlib import pyplot as plt
 import sys
-#import mesh_plotter
+#from mesh_plotter import mesh_plotter
 
 sys.path.append("../utils/")
 from petsc_problems import SNESProblem
@@ -617,3 +617,9 @@ if comm.rank == 0:
     ax2[1].set_xlabel('Time [s]')
     ax2[1].set_ylabel('Reaction force [N]')
     plt.show()
+
+# %% [markdown]
+# The engines launched at the beginning keep running once the notebook reaches its end. Stopping the cluster releases them.
+
+# %%
+rc.cluster.stop_cluster_sync()

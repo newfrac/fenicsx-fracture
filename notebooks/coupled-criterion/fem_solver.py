@@ -7,7 +7,6 @@ from petsc4py import PETSc
 import sys
 import dolfinx.fem.petsc
 
-sys.path.append("./pycodes_coupledcriterion")
 from SNES_solver import *
 
 sys.path.append("../utils/")

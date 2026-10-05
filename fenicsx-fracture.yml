@@ -1,17 +1,22 @@
+# Conda environment for the fenicsx-fracture book (DOLFINx 0.11.0)
+#
+#   conda env create -f fenicsx-fracture.yml
+#   conda activate fenicsx-fracture
+#
+# Use strict channel priority (conda config --set channel_priority strict).
 name: fenicsx-fracture
 channels:
   - conda-forge
-channel-priority: strict
 dependencies:
-  - python>=3.10
-  - fenics-dolfinx=0.10.0
+  - python>=3.10,<3.14
+  - fenics-dolfinx=0.11.0
   - jupyter-book<2
   - matplotlib
-  - numba
   - numpy
   - sympy
   - scipy
   - gmsh
+  - python-gmsh
   - pyaml
   - pandas
   - jupyterlab
@@ -22,6 +27,7 @@ dependencies:
   - seaborn
   - tqdm
   - meshio
+  - pytest
   - nbmake
   - ruff
   - pip

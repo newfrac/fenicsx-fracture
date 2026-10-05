@@ -1,39 +1,38 @@
-# Execute from root of repo as: docker buildx build --platform=linux/arm64,linux/amd64 -f docker/Dockerfile ./docker/ --progress=plain
+# Image for the fenicsx-fracture book, built on the official DOLFINx JupyterLab image.
+#
+# Build from the root of the repository:
+#   docker build -t fenicsx-fracture -f docker/Dockerfile .
+#
+# Multi-platform build:
+#   docker buildx build --platform=linux/arm64,linux/amd64 -f docker/Dockerfile . --progress=plain
 
-FROM ghcr.io/fenics/dolfinx/lab:v0.10.0
+FROM ghcr.io/fenics/dolfinx/lab:v0.11.0
 ARG TARGETPLATFORM
-
 
 ENV DEB_PYTHON_INSTALL_LAYOUT=deb_system
 ENV HDF5_MPI="ON"
 ENV HDF5_DIR="/usr/local"
-ENV PYVISTA_JUPYTER_BACKEND="static"
 
-WORKDIR /tmp/RUN 
-# Requirements for pyvista (gl1 and render1) and jupyterlab (nodejs and curl)
-RUN apt-get update && apt-get install -y  libgl1-mesa-dev mesa-utils  libxrender1 xvfb curl 
+WORKDIR /tmp/
 
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
-    apt-get install -y nodejs && \
+# Requirements for pyvista off-screen rendering
+RUN apt-get update && \
+    apt-get install -y libgl1-mesa-dev mesa-utils libxrender1 xvfb && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
-# Upgrade setuptools and pip
+
 RUN python3 -m pip install -U setuptools pip pkgconfig
 
-# BUILD VTK
-# ENV VTK_VERSION="v9.2.6"
-# RUN git clone --recursive --branch ${VTK_VERSION} --single-branch https://gitlab.kitware.com/vtk/vtk.git vtk && \
-#     cmake -G Ninja -DVTK_WHEEL_BUILD=ON -DVTK_WRAP_PYTHON=ON vtk/ && \
-#     ninja && \
-#     python3 setup.py bdist_wheela
-
-
-RUN python3 -m pip install vtk
-RUN python3 -m pip install --no-cache-dir --no-binary=h5py h5py 
-RUN python3 -m pip cache purge
+# Book and notebook dependencies
+COPY docker/requirements.txt /tmp/requirements.txt
+RUN python3 -m pip install --no-cache-dir vtk && \
+    python3 -m pip install --no-cache-dir -r /tmp/requirements.txt && \
+    HDF5_MPI=${HDF5_MPI} CC=mpicc HDF5_DIR=${HDF5_DIR} \
+        python3 -m pip install --no-cache-dir --no-binary=h5py h5py && \
+    python3 -m pip cache purge
 
 ENV PYVISTA_OFF_SCREEN="false"
 ENV PYVISTA_JUPYTER_BACKEND="trame"
 ENV LIBGL_ALWAYS_SOFTWARE=1
 
-# RUN jupyter lab build
+EXPOSE 8888/tcp
 ENTRYPOINT ["jupyter", "lab", "--ip", "0.0.0.0", "--no-browser", "--allow-root"]
